@@ -3,7 +3,7 @@ import React from 'react';
 export default React.createClass({
   // TODO: proptypes, ES6 class extends syntax
   getChoices: function() {
-    return this.props.question ? this.props.question.choices : undefined;
+    return this.props.question ? this.props.question.choices : [];
   },
   isChosen: function(index) {
     return this.props.response && this.props.response.choiceIndex === index;

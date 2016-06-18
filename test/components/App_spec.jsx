@@ -1,16 +1,18 @@
+import {expect} from 'chai';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   renderIntoDocument,
   scryRenderedDOMComponentsWithTag,
-  Simulate
+  findRenderedComponentWithType
 } from 'react-addons-test-utils';
+
 import App from '../../src/components/App';
-import {expect} from 'chai';
+import QuestionResponse from '../../src/components/QuestionResponse';
+import Results from '../../src/components/Results';
 
 describe('App', () => {
-
-  it('renders the possible choices', () => {
+  it('renders QuestionResponse when an active question exists', () => {
     const active = {
       question: {
         experimentId: 2,
@@ -19,36 +21,41 @@ describe('App', () => {
       },
       response: undefined
     };
+
     const component = renderIntoDocument(
-      <App {...active} />
+      <App active={active} />
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
+    expect(buttons).to.have.lengthOf(3);
 
-    expect(buttons.length).to.equal(3);
-    expect(buttons[0].textContent).to.equal('JCB1');
-    expect(buttons[1].textContent).to.equal('sample0');
-    expect(buttons[2].textContent).to.equal('sample1');
+    const results = ReactDOM.findDOMNode(component.refs.results);
+    expect(results).to.be.not.ok;
   });
 
-  it('invokes callback when a button is clicked', () => {
-    let choiceIndex;
-    const choose = (index) => choiceIndex = index;
-
-    const active = {
-      question: {
+  it('renders Results when finished', () => {
+    const responses = [
+      {
         experimentId: 2,
         choices: ['JCB1', 'sample0', 'sample1'],
-        correctIndex: 0
+        correctIndex: 0,
+        choiceIndex: 1
       },
-      response: undefined
-    };
+      {
+        experimentId: 2,
+        choices: ['JCB2', 'sample2', 'sample3'],
+        correctIndex: 2,
+        choiceIndex: 2
+      },
+    ];
+
     const component = renderIntoDocument(
-      <App {...active} choose={choose} />
+      <App active={undefined} responses={responses} question={[]}/>
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
-    Simulate.click(buttons[0]);
+    expect(buttons).to.be.empty;
 
-    expect(choiceIndex).to.equal(0);
-    // TODO: test that choice is correct/incorrect
+    const results = ReactDOM.findDOMNode(component.refs.results);
+    expect(results).to.be.ok;
+    // TODO: test results.textContent to be correct
   });
 });
