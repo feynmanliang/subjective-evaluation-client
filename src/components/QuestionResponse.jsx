@@ -16,7 +16,7 @@ export default class QuestionResponse extends Component {
   }
 
   render() {
-    return <div className="app">
+    return <div className="choices">
       {this.getChoices().map((choice,index) =>
         <button key={choice.name}
                 className={"ui button" + (this.isChosen() ? " active" : "")}

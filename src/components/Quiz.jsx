@@ -4,7 +4,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import QuestionResponse from './QuestionResponse';
 import Results from './Results';
 
-export default class App extends Component {
+export default class Quiz extends Component {
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
@@ -23,7 +23,7 @@ export default class App extends Component {
   }
 }
 
-App.propTypes = {
+Quiz.propTypes = {
   // TODO: reuse proptypes in subcomponents, DRY
   active: PropTypes.shape({
     question: PropTypes.shape({
@@ -44,4 +44,4 @@ App.propTypes = {
   responses: PropTypes.array
 };
 
-App.defaultProps = {};
+Quiz.defaultProps = {};
