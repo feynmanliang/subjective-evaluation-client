@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   renderIntoDocument,
-  scryRenderedDOMComponentsWithTag
+  scryRenderedDOMComponentsWithTag,
+  Simulate
 } from 'react-addons-test-utils';
 import App from '../../src/components/App';
 import {expect} from 'chai';
@@ -29,4 +30,25 @@ describe('App', () => {
     expect(buttons[2].textContent).to.equal('sample1');
   });
 
+  it('invokes callback when a button is clicked', () => {
+    let choiceIndex;
+    const choose = (index) => choiceIndex = index;
+
+    const active = {
+      question: {
+        experimentId: 2,
+        choices: ['JCB1', 'sample0', 'sample1'],
+        correctIndex: 0
+      },
+      response: undefined
+    };
+    const component = renderIntoDocument(
+      <App {...active} choose={choose} />
+    );
+    const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
+    Simulate.click(buttons[0]);
+
+    expect(choiceIndex).to.equal(0);
+    // TODO: test that choice is correct/incorrect
+  });
 });

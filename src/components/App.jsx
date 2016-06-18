@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
+  // TODO: proptypes, ES6 class extends syntax
   getChoices: function() {
     return this.props.question ? this.props.question.choices : undefined;
   },
@@ -12,8 +13,9 @@ export default React.createClass({
   },
   render: function() {
     return <div className="app">
-      {this.getChoices().map(choice =>
-        <button key={choice}>
+      {this.getChoices().map((choice,index) =>
+        <button key={choice}
+                onClick={() => this.props.choose(index)}>
           <h1>{choice}</h1>
         </button>
       )}
