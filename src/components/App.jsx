@@ -1,24 +1,16 @@
 import React from 'react';
+import QuestionResponse from './QuestionResponse';
+import Results from './Results';
 
 export default React.createClass({
-  // TODO: proptypes, ES6 class extends syntax
-  getChoices: function() {
-    return this.props.question ? this.props.question.choices : undefined;
-  },
-  getCorrectIndex: function() {
-    return this.props.question ? this.props.question.correctIndex : undefined;
-  },
-  getResponse: function() {
-    return this.props.response || undefined;
+  isFinished: function() {
+    return this.props.active === undefined && this.props.questions && this.props.questions.length === 0;
   },
   render: function() {
-    return <div className="app">
-      {this.getChoices().map((choice,index) =>
-        <button key={choice}
-                onClick={() => this.props.choose(index)}>
-          <h1>{choice}</h1>
-        </button>
-      )}
-    </div>;
+    return <div>
+      {this.isFinished() ?
+        <Results ref="results" responses={this.props.responses} /> :
+        <QuestionResponse {...this.props} />}
+    </div>
   }
 });

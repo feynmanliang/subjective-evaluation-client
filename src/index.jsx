@@ -13,5 +13,6 @@ const active = {
 
 ReactDOM.render(
   <App {...active} />,
+  // TODO: choose prop should update responses in state
   document.getElementById('app')
 );
