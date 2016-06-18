@@ -12,7 +12,7 @@ describe('QuestionResponse', () => {
   it('renders the possible choices', () => {
     const active = {
       question: {
-        experimentId: 2,
+        experimentId: '2',
         choices: ['JCB1', 'sample0', 'sample1'],
         correctIndex: 0
       },
@@ -48,6 +48,5 @@ describe('QuestionResponse', () => {
     Simulate.click(buttons[0]);
 
     expect(choiceIndex).to.equal(0);
-    // TODO: test that choice is correct/incorrect
   });
 });

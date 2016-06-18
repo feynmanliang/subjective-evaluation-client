@@ -25,10 +25,10 @@ describe('Results', () => {
       },
     ];
 
-    const resultsComponent = renderIntoDocument(
+    const results = renderIntoDocument(
       <Results responses={responses} />
     );
-    expect(resultsComponent.percentCorrect()).to.equal(0.5);
-    // TODO: test results.textContent to be correct
+    expect(results.percentCorrect()).to.equal(0.5);
+    expect(ReactDOM.findDOMNode(results).textContent).to.contain('0.5');
   });
 });

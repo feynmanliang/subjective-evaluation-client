@@ -55,6 +55,5 @@ describe('App', () => {
 
     const results = ReactDOM.findDOMNode(component.refs.results);
     expect(results).to.be.ok;
-    // TODO: test results.textContent to be correct
   });
 });

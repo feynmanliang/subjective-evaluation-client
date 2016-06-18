@@ -1,20 +1,42 @@
-import React from 'react';
+import React,{Component,PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import QuestionResponse from './QuestionResponse';
 import Results from './Results';
 
-export default React.createClass({
-  // TODO: proptypes, ES6 class extends syntax
-  mixins: [PureRenderMixin],
-  isFinished: function() {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
+
+  isFinished() {
     return this.props.active === undefined && (!this.props.questions || this.props.questions.length === 0);
-  },
-  render: function() {
+  }
+
+  render() {
     return <div>
       {this.isFinished() ?
         <Results ref="results" responses={this.props.responses} /> :
         <QuestionResponse {...this.props.active} />}
     </div>
   }
-});
+}
+
+App.propTypes = {
+  // TODO: reuse proptypes in subcomponents, DRY
+  active: PropTypes.shape({
+    question: PropTypes.shape({
+      experimentId: PropTypes.string.isRequired,
+      choices: PropTypes.array.isRequired,
+      correctIndex: PropTypes.number.isRequired
+    }),
+    response: PropTypes.shape({
+      choiceIndex: PropTypes.number.isRequired
+    })
+  }),
+  questions: PropTypes.array,
+  responses: PropTypes.array
+};
+
+App.defaultProps = {};

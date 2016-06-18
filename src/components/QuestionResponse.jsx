@@ -1,16 +1,21 @@
-import React from 'react';
+import React,{Component,PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-export default React.createClass({
-  // TODO: proptypes, ES6 class extends syntax
-  mixins: [PureRenderMixin],
-  getChoices: function() {
+export default class QuestionResponse extends Component {
+  constructor(props) {
+    super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
+
+  getChoices() {
     return this.props.question ? this.props.question.choices : [];
-  },
-  isChosen: function(index) {
+  }
+
+  isChosen(index) {
     return this.props.response && this.props.response.choiceIndex === index;
-  },
-  render: function() {
+  }
+
+  render() {
     return <div className="app">
       {this.getChoices().map((choice,index) =>
         <button key={choice}
@@ -21,4 +26,17 @@ export default React.createClass({
       )}
     </div>;
   }
-});
+};
+
+QuestionResponse.propTypes = {
+  question: PropTypes.shape({
+    experimentId: PropTypes.string.isRequired,
+    choices: PropTypes.array.isRequired,
+    correctIndex: PropTypes.number.isRequired
+  }).isRequired,
+  response: PropTypes.shape({
+    choiceIndex: PropTypes.number.isRequired
+  })
+};
+
+QuestionResponse.defaultProps = {};
