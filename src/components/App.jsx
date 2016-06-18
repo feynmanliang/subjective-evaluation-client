@@ -28,7 +28,12 @@ App.propTypes = {
   active: PropTypes.shape({
     question: PropTypes.shape({
       experimentId: PropTypes.string.isRequired,
-      choices: PropTypes.array.isRequired,
+      choices: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired
+        })
+      ).isRequired,
       correctIndex: PropTypes.number.isRequired
     }),
     response: PropTypes.shape({

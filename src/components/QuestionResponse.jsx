@@ -18,10 +18,10 @@ export default class QuestionResponse extends Component {
   render() {
     return <div className="app">
       {this.getChoices().map((choice,index) =>
-        <button key={choice}
+        <button key={choice.name}
                 className={"ui button" + (this.isChosen() ? " active" : "")}
                 onClick={() => this.props.choose(index)}>
-          <h1>{choice}</h1>
+          <h1>{choice.url}</h1>
         </button>
       )}
     </div>;
