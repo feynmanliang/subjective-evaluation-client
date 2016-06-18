@@ -1,7 +1,9 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   // TODO: proptypes, ES6 class extends syntax
+  mixins: [PureRenderMixin],
   getChoices: function() {
     return this.props.question ? this.props.question.choices : [];
   },
