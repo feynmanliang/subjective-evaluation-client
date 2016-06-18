@@ -3,8 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   renderIntoDocument,
-  scryRenderedDOMComponentsWithTag,
-  findRenderedComponentWithType
+  scryRenderedDOMComponentsWithTag
 } from 'react-addons-test-utils';
 
 import App from '../../src/components/App';
