@@ -6,11 +6,11 @@ import {
   scryRenderedDOMComponentsWithTag
 } from 'react-addons-test-utils';
 
-import App from '../../src/components/App';
+import Quiz from '../../src/components/Quiz';
 import QuestionResponse from '../../src/components/QuestionResponse';
 import Results from '../../src/components/Results';
 
-describe('App', () => {
+describe('Quiz', () => {
   it('renders QuestionResponse when an active question exists', () => {
     const active = {
       question: {
@@ -22,7 +22,7 @@ describe('App', () => {
     };
 
     const component = renderIntoDocument(
-      <App active={active} />
+      <Quiz active={active} />
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     expect(buttons).to.have.lengthOf(3);
@@ -48,7 +48,7 @@ describe('App', () => {
     ];
 
     const component = renderIntoDocument(
-      <App active={undefined} responses={responses} question={[]}/>
+      <Quiz active={undefined} responses={responses} question={[]}/>
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     expect(buttons).to.be.empty;

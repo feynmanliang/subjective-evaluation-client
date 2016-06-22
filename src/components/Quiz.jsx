@@ -5,6 +5,27 @@ import QuestionResponse from './QuestionResponse';
 import Results from './Results';
 
 export default class Quiz extends Component {
+  static propTypes = {
+    // TODO: reuse proptypes in subcomponents, DRY
+    active: PropTypes.shape({
+      question: PropTypes.shape({
+        experimentId: PropTypes.string.isRequired,
+        choices: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            url: PropTypes.string.isRequired
+          })
+        ).isRequired,
+        correctIndex: PropTypes.number.isRequired
+      }),
+      response: PropTypes.shape({
+        choiceIndex: PropTypes.number
+      })
+    }),
+    questions: PropTypes.array,
+    responses: PropTypes.array
+  };
+
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
@@ -22,26 +43,3 @@ export default class Quiz extends Component {
     </div>
   }
 }
-
-Quiz.propTypes = {
-  // TODO: reuse proptypes in subcomponents, DRY
-  active: PropTypes.shape({
-    question: PropTypes.shape({
-      experimentId: PropTypes.string.isRequired,
-      choices: PropTypes.arrayOf(
-        PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          url: PropTypes.string.isRequired
-        })
-      ).isRequired,
-      correctIndex: PropTypes.number.isRequired
-    }),
-    response: PropTypes.shape({
-      choiceIndex: PropTypes.number.isRequired
-    })
-  }),
-  questions: PropTypes.array,
-  responses: PropTypes.array
-};
-
-Quiz.defaultProps = {};

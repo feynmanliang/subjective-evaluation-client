@@ -1,7 +1,9 @@
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
     './src/index.jsx'
@@ -9,8 +11,8 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'react-hot!babel'
+      include: path.join(__dirname, 'src'),
+      loaders: ['react-hot', 'babel-loader'],
     }]
   },
   resolve: {
