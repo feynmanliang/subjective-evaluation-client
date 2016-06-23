@@ -1,29 +1,25 @@
+import R from 'ramda';
+
 import React,{Component,PropTypes} from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import {connect} from 'react-redux';
 
-import QuestionResponse from './QuestionResponse';
-import Results from './Results';
+import Boombox from './Boombox'; // TODO: initialize once
 
-export default class Quiz extends Component {
+const {contains, list} = ImmutablePropTypes
+const {string, number} = PropTypes;
+
+export class Quiz extends Component {
   static propTypes = {
-    // TODO: reuse proptypes in subcomponents, DRY
-    active: PropTypes.shape({
-      question: PropTypes.shape({
-        experimentId: PropTypes.string.isRequired,
-        choices: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired
-          })
-        ).isRequired,
-        correctIndex: PropTypes.number.isRequired
-      }),
-      response: PropTypes.shape({
-        choiceIndex: PropTypes.number
-      })
-    }),
-    questions: PropTypes.array,
-    responses: PropTypes.array
+    question: contains({
+      experimentId: string.isRequired,
+      choices: list.isRequired,
+      correctIndex: number.isRequired
+    }).isRequired,
+    response: contains({
+      choiceIndex: number.isRequired
+    })
   };
 
   constructor(props) {
@@ -31,15 +27,36 @@ export default class Quiz extends Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
-  isFinished() {
-    return this.props.active === undefined && (!this.props.questions || this.props.questions.length === 0);
+  getChoices() {
+    if (this.props.question) {
+      console.log(this.props.question);
+      return this.props.question.get('choices').map((choice,index) =>
+          <div key={choice.get('name')}>
+            <button className={"ui button" + (this.isChosen() ? " active" : "")}
+                    onClick={() => this.props.choose(choice.get('url'))}>
+              <h1>{choice.get('name')}</h1>
+            </button>
+            <Boombox />
+            <br />
+          </div>
+      );
+    }
+  }
+
+  isChosen(index) {
+    return this.props.response && this.props.response.choiceIndex === index;
   }
 
   render() {
-    return <div>
-      {this.isFinished() ?
-        <Results ref="results" responses={this.props.responses} /> :
-        <QuestionResponse {...this.props.active} />}
-    </div>
+    return <div className="choices">
+      {this.getChoices()}
+    </div>;
   }
-}
+};
+
+export const QuizContainer = connect(
+  (state) => ({
+    question: state.getIn(['active', 'question']),
+    response: state.getIn(['active', 'response'])
+  })
+)(Quiz);
