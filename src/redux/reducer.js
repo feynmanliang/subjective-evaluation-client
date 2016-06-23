@@ -1,6 +1,16 @@
 import {fromJS} from 'immutable';
 
-import {setExperiment, setExperimentId, setQuestions, next, respond, INITIAL_STATE} from './core';
+import {
+    setExperiment,
+    setExperimentId,
+    setQuestions,
+    next,
+    respond,
+    playSound,
+    pauseSound,
+    replaySound,
+    INITIAL_STATE
+} from './core';
 
 export default {
     main: (state = INITIAL_STATE, action) => {
@@ -11,6 +21,12 @@ export default {
                 return setExperimentId(fromJS(action.experimentId), state);
             case 'SET_QUESTIONS':
                 return setQuestions(fromJS(action.questions), state);
+            case 'PLAY_SOUND':
+                return playSound(fromJS(action.name), state);
+            case 'PAUSE_SOUND':
+                return pauseSound(fromJS(action.name), state);
+            case 'REPLAY_SOUND':
+                return replaySound(fromJS(action.name), state);
             case 'NEXT':
                 return next(state);
             case 'RESPOND':

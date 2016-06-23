@@ -10,46 +10,6 @@ export const INITIAL_STATE = fromJS({
     active: {}
 });
 
-// export const setExperiment = (experimentData) => R.compose(
-//     setQuestions(generateQuestions(experimentData)),
-//     setExperimentId(experimentData.id)
-// );
-export const setExperiment = (experimentData, state) => {
-    return next(
-        setQuestions(
-            generateQuestions(experimentData),
-            setExperimentId(experimentData.get('id'), state)));
-};
-
-export const setExperimentId = ((id, state) =>
-    state.set('experimentId', id));
-
-export const setQuestions = ((questions, state) =>
-    state.set('questions', questions));
-
-export function next(state) {
-    const questions = state.get('questions');
-    const activeQuestion = state.getIn(['active','question']);
-    const activeResponse = state.getIn(['active','response']);
-    const responses = state.get('responses');
-
-    return state.merge({
-        active: questions.size > 0 ?
-            {
-                question: questions.first(),
-            } :
-            undefined,
-        questions: questions.rest(),
-        responses: (activeResponse && activeQuestion) ?
-            responses.push(activeQuestion.merge(activeResponse)) : responses,
-    });
-}
-
-export const respond = R.curry((activeState, response) =>
-    activeState.merge({
-        response
-    }));
-
 function generateQuestions(experimentData) {
     const NUM_QUESTIONS = 2;
     // TODO: extend these to be > 1 so can have more than bach vs not
@@ -79,3 +39,36 @@ function generateQuestions(experimentData) {
         };
     }).toList());
 }
+ export const setExperiment = (experimentData, state) => R.compose(
+     next,
+     setQuestions(generateQuestions(experimentData)),
+     setExperimentId(experimentData.id))(state);
+
+export const setExperimentId = R.curry((id, state) =>
+    state.set('experimentId', id));
+
+export const setQuestions = R.curry((questions, state) =>
+    state.set('questions', questions));
+
+export function next(state) {
+    const questions = state.get('questions');
+    const activeQuestion = state.getIn(['active','question']);
+    const activeResponse = state.getIn(['active','response']);
+    const responses = state.get('responses');
+
+    return state.merge({
+        active: questions.size > 0 ?
+            {
+                question: questions.first(),
+            } :
+            undefined,
+        questions: questions.rest(),
+        responses: (activeResponse && activeQuestion) ?
+            responses.push(activeQuestion.merge(activeResponse)) : responses,
+    });
+}
+
+export const respond = R.curry((activeState, response) =>
+    activeState.merge({
+        response
+    }));
