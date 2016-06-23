@@ -1,5 +1,6 @@
 import R from 'ramda';
-import {Map,List,fromJS,toJS} from 'immutable';
+
+import Immutable,{Map,List,fromJS,toJS} from 'immutable';
 import randomSubset from 'random-array-subset';
 
 export const INITIAL_STATE = fromJS({
@@ -14,23 +15,17 @@ export const INITIAL_STATE = fromJS({
 //     setExperimentId(experimentData.id)
 // );
 export const setExperiment = (experimentData, state) => {
-    return setQuestions(
-        generateQuestions(experimentData),
-        setExperimentId(experimentData.id, state));
+    return next(
+        setQuestions(
+            generateQuestions(experimentData),
+            setExperimentId(experimentData.get('id'), state)));
 };
 
 export const setExperimentId = ((id, state) =>
     state.set('experimentId', id));
 
-export const setQuestions = ((questions, state) => {
-    if (questions.length > 0) {
-        return state
-            .setIn(['active', 'question'], R.head(questions))
-            .set('questions', R.tail(questions));
-    } else {
-        return state;
-    }
-});
+export const setQuestions = ((questions, state) =>
+    state.set('questions', questions));
 
 export function next(state) {
     const questions = state.get('questions');
@@ -67,19 +62,20 @@ function generateQuestions(experimentData) {
     const original = experimentData.get('original')
     const generated = experimentData.get('generated')
 
-    return R.range(0, NUM_QUESTIONS).map(() => {
+    return fromJS(Immutable.Range(0, NUM_QUESTIONS).map(() => {
+        // TODO: make this code pure
         // the originals are the "correct" responses
         const correctChoices = randomSubset(R.range(0, original.size), NUM_ORIG_PER_Q).map(i => original.get(i));
         const incorrectChoices = randomSubset(R.range(0, generated.size), NUM_GEN_PER_Q).map(i => generated.get(i));
         const correctIndex = randomSubset(R.range(0, numChoices), NUM_ORIG_PER_Q)[0]; // TODO: support multiple correct
 
-        return fromJS({
+        return {
             experimentId,
-            choices: R.range(0, numChoices).map((i) => {
+            choices: Immutable.Range(0, numChoices).map((i) => {
                 if (i === correctIndex) return correctChoices.pop();
                 else return incorrectChoices.pop();
-            }),
+            }).toList(),
             correctIndex,
-        });
-    });
+        };
+    }).toList());
 }

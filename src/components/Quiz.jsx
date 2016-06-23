@@ -11,20 +11,24 @@ import Boombox from './Boombox';
 
 const boombox = require('boombox-js');
 
-const {contains, list} = ImmutablePropTypes
+const {contains, listOf} = ImmutablePropTypes
 const {string, number, func} = PropTypes;
 
 export class Quiz extends Component {
   static propTypes = {
     question: contains({
       experimentId: string.isRequired,
-      choices: list.isRequired,
+      choices: listOf(contains({
+        name: string.isRequired,
+        url: string.isRequired
+      })).isRequired,
       correctIndex: number.isRequired
     }).isRequired,
     response: contains({
       choiceIndex: number.isRequired
     }),
-    respond: func.isRequired
+    respond: func.isRequired,
+    next: func.isRequired
   };
 
   constructor(props) {
@@ -66,8 +70,14 @@ export class Quiz extends Component {
   }
 
   render() {
-    return <div className="choices">
-      {this.getChoices()}
+    return <div className="quiz">
+      <div className="choices">
+        {this.getChoices()}
+      </div>
+      <button className={"ui button"}
+              onClick={this.props.next}>
+        Next Question
+      </button>
     </div>;
   }
 };

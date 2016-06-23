@@ -3,10 +3,9 @@ import 'babel-polyfill' // required for fetch
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory} from 'react-router';
-import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
-import reducer from './redux/reducer';
+import configureStore from './redux/store';
 import {setExperiment} from './redux/action_creators';
 
 import MainLayout from './components/MainLayout';
@@ -39,7 +38,7 @@ const experimentData = {
     ]
 };
 
-const store = createStore(reducer);
+const store = configureStore();
 store.dispatch(setExperiment(experimentData));
 
 const routes = <Route component={MainLayout}>
