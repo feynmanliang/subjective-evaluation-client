@@ -10,11 +10,13 @@ import reducer from './redux/reducer';
 
 import MainLayout from './components/MainLayout';
 import Quiz from './components/Quiz';
+import Results from './components/Results';
 
 const store = createStore(reducer);
 
 const routes = <Route component={MainLayout}>
   <Route path="/" component={Quiz} />
+  <Route path="/results" component={Results} />
 </Route>;
 
 // load experiment samples to generate questions from

@@ -2,6 +2,7 @@ import R from 'ramda';
 
 import React,{Component} from 'react';
 
+// experimental config fetched from remote server
 const data = {
     "id": "testExperiment",
     "original": [
@@ -26,7 +27,13 @@ const data = {
     ]
 };
 
-function makeProps(experimentData) {
+// results from user input
+const responses = [
+  { correctIndex: 1, choiceIndex: 1 },
+  { correctIndex: 0, choiceIndex: 1 },
+];
+
+function makeInitialState(experimentData) {
   const experimentId = experimentData.id
   const original = experimentData.original
   const generated = experimentData.generated
@@ -57,7 +64,8 @@ function makeProps(experimentData) {
     active: {
       question: R.head(questions)
     },
-    questions: R.tail(questions)
+    questions: R.tail(questions),
+    responses
   };
 }
 
@@ -67,7 +75,7 @@ export default class MainLayout extends Component {
         <header className="primary-header"></header>
         <aside className="primary-aside"></aside>
         <main>
-          {React.cloneElement(this.props.children, makeProps(data))}
+          {React.cloneElement(this.props.children, makeInitialState(data))}
         </main>
       </div>;
   }

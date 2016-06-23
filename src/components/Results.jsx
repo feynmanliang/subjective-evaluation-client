@@ -1,7 +1,18 @@
 import React,{Component,PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+const {arrayOf, shape, number} = PropTypes;
+
 export default class Results extends Component {
+  static propTypes = {
+    responses: arrayOf(
+      PropTypes.shape({
+        correctIndex: number.isRequired,
+        choiceIndex: number.isRequired
+      })
+    ).isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
@@ -23,14 +34,3 @@ export default class Results extends Component {
     </div>
   }
 }
-
-Results.propTypes = {
-  responses: PropTypes.arrayOf(
-    PropTypes.shape({
-      correctIndex: PropTypes.number.isRequired,
-      choiceIndex: PropTypes.number.isRequired
-    })
-  ).isRequired,
-};
-
-Results.defaultProps = {};
