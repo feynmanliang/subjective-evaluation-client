@@ -5,12 +5,14 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux';
 
+import * as actionCreators from '../redux/action_creators';
+
 import Boombox from './Boombox';
 
 const boombox = require('boombox-js');
 
 const {contains, list} = ImmutablePropTypes
-const {string, number} = PropTypes;
+const {string, number, func} = PropTypes;
 
 export class Quiz extends Component {
   static propTypes = {
@@ -21,7 +23,8 @@ export class Quiz extends Component {
     }).isRequired,
     response: contains({
       choiceIndex: number.isRequired
-    })
+    }),
+    respond: func.isRequired
   };
 
   constructor(props) {
@@ -46,7 +49,7 @@ export class Quiz extends Component {
       return this.props.question.get('choices').map((choice,index) =>
           <div key={choice.get('name')}>
             <button className={"ui button" + (this.isChosen() ? " active" : "")}
-                    onClick={() => this.props.choose(choice.get('url'))}>
+                    onClick={() => this.props.respond({ choiceIndex: index })}>
               <h1>{choice.get('name')}</h1>
             </button>
             <Boombox boombox={boombox}
@@ -73,5 +76,6 @@ export const QuizContainer = connect(
   (state) => ({
     question: state.getIn(['active', 'question']),
     response: state.getIn(['active', 'response'])
-  })
+  }),
+  actionCreators
 )(Quiz);

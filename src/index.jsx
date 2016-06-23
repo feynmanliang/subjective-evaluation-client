@@ -7,6 +7,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import reducer from './redux/reducer';
+import {setExperiment} from './redux/action_creators';
 
 import MainLayout from './components/MainLayout';
 import {QuizContainer} from './components/Quiz';
@@ -39,10 +40,7 @@ const experimentData = {
 };
 
 const store = createStore(reducer);
-store.dispatch({
-  type: 'SET_EXPERIMENT',
-  experimentData
-});
+store.dispatch(setExperiment(experimentData));
 
 const routes = <Route component={MainLayout}>
   <Route path="/" component={QuizContainer} />
