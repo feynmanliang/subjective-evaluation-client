@@ -55,8 +55,8 @@ export class Quiz extends Component {
     // TODO: move app logic in reducer
     if (nextProps.question === undefined) {
       this.boombox.power(this.boombox.POWER_OFF);
-      this.props.navigateTo('/results')
-    };
+      this.props.navigateTo('/results');
+    }
   }
 
   isChoiceSelected(index) {
