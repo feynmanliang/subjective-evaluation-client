@@ -51,7 +51,7 @@ export const respond = R.curry((activeState, response) =>
     }));
 
 function generateQuestions(experimentData) {
-    const NUM_QUESTIONS = 5;
+    const NUM_QUESTIONS = 2;
     // TODO: extend these to be > 1 so can have more than bach vs not
     const NUM_GEN_PER_Q = 1;
     const NUM_ORIG_PER_Q = 1;

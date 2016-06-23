@@ -4,12 +4,16 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
 const { contains, listOf } = ImmutablePropTypes
-const { number } = PropTypes;
+const { number, string } = PropTypes;
 
 export class Results extends Component {
   static propTypes = {
     responses: listOf(
       contains({
+        choices: listOf(contains({
+          name: string.isRequired,
+          url: string.isRequired
+        })).isRequired,
         correctIndex: number.isRequired,
         choiceIndex: number.isRequired
       })
@@ -32,9 +36,38 @@ export class Results extends Component {
   }
 
   render() {
+    const { responses } = this.props;
     return <div className="results">
       You scored {this.percentCorrect()}%!
+      {responses.map((response, idx) => <ResponseItem key={idx} {...response.toObject()} />)}
     </div>
+  }
+}
+
+class ResponseItem extends Component {
+  static propTypes = {
+    choices: listOf(contains({
+      name: string.isRequired,
+      url: string.isRequired
+    })).isRequired,
+    correctIndex: number.isRequired,
+    choiceIndex: number.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
+
+  render() {
+    const { choices, correctIndex, choiceIndex } = this.props;
+    const isCorrect = correctIndex === choiceIndex;
+    return <div className={"ui message" + (isCorrect ? " positive" : " negative")}>
+      <div className="header">
+        {isCorrect ? "Correct" : "Incorrect"}
+      </div>
+      {JSON.stringify(choices)}
+    </div>;
   }
 }
 

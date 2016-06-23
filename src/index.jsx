@@ -13,64 +13,29 @@ import MainLayout from './components/MainLayout';
 import { QuizContainer } from './components/Quiz';
 import { ResultsContainer } from './components/Results';
 
-// experimental config fetched from remote server
-// TODO: make this an async request
-const experimentData = {
-    "id": "testExperiment",
-    "original": [
-        {
-            "name": "Beethoven",
-            "url": "/beethoven.mp3"
-        },
-        {
-            "name": "Chopin",
-            "url": "/chopin.mp3"
+fetch('http://localhost:3000/experiment.json')
+  .then(response => response.json())
+  .then(experimentData => {
+    const store = configureStore();
+    store.dispatch(setExperiment(experimentData));
+    return store;
+  })
+  .then((store) => {
+    const history = syncHistoryWithStore(browserHistory, store, {
+        selectLocationState (state) {
+            return state.get('routing').toJS();
         }
-    ],
-    "generated": [
-        {
-            "name": "Joplin",
-            "url": "/joplin.mp3"
-        },
-        {
-            "name": "Largo",
-            "url": "/largo.mp3"
-        }
-    ]
-};
+    });
 
-const store = configureStore();
-store.dispatch(setExperiment(experimentData));
-
-const history = syncHistoryWithStore(browserHistory, store, {
-    selectLocationState (state) {
-        return state.get('routing').toJS();
-    }
-});
-
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={MainLayout}>
-        <IndexRoute component={QuizContainer} />
-        <Route path="results" component={ResultsContainer} />
-      </Route>
-    </Router>
-  </Provider>,
-  document.getElementById('root'));
-
-// load experiment samples to generate questions from
-// fetch('http://localhost:3000/')
-//   .then(response => response.json())
-//   .then(questions => {
-//     store.dispatch({
-//       type: 'SET_QUESTIONS',
-//       questions
-//     });
-//   })
-//   .then((questions) => {
-//     ReactDOM.render(
-//       <Router history={browserHistory}>{routes}</Router>,
-//       document.getElementById('root'));
-//   });
+    ReactDOM.render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Route path="/" component={MainLayout}>
+            <IndexRoute component={QuizContainer} />
+            <Route path="results" component={ResultsContainer} />
+          </Route>
+        </Router>
+      </Provider>,
+      document.getElementById('root'));
+  });
 
