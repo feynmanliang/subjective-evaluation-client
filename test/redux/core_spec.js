@@ -1,7 +1,7 @@
 import {List, Map, fromJS} from 'immutable';
 import {expect} from 'chai';
 
-import {setQuestions, next, respond, INITIAL_STATE} from '../../src/redux/core';
+import {setQuestions, next, updateResponse, INITIAL_STATE} from '../../src/redux/core';
 
 describe('application logic', () => {
     describe('setQuestions', () => {
@@ -90,7 +90,7 @@ describe('application logic', () => {
         });
     });
 
-    describe('respond', () => {
+    describe('updateResponse', () => {
         it('creates a response for the question', () => {
             const state = fromJS({
                 question: {
@@ -103,7 +103,7 @@ describe('application logic', () => {
                 choiceIndex: 1
                 // TODO: time spent on question and number of plays per choice
             });
-            const nextState = respond(state, response);
+            const nextState = updateResponse(state, response);
             expect(nextState).to.equal(fromJS({
                 question: {
                     experimentId: 2,

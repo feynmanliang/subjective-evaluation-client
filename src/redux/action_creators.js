@@ -7,16 +7,26 @@ export function setExperiment(experimentData) {
   };
 }
 
-export function respond(response) {
+export function updateChoice(response) {
   return {
-    type: 'RESPOND',
+    type: 'UPDATE_CHOICE',
     response
   };
 }
 
-export function playSound(name) {
+export function next() {
   return {
-    type: 'PLAY_SOUND',
+    type: 'NEXT'
+  };
+}
+
+export function navigateTo(path) {
+  return push(path);
+}
+
+export function playResumeSound(name) {
+  return {
+    type: 'PLAY_RESUME_SOUND',
     name
   }
 }
@@ -35,12 +45,3 @@ export function replaySound(name) {
   }
 }
 
-export function next() {
-  return {
-    type: 'NEXT'
-  };
-}
-
-export function navigateTo(path) {
-  return push(path);
-}

@@ -5,8 +5,8 @@ import {
     setExperimentId,
     setQuestions,
     next,
-    respond,
-    playSound,
+    updateChoice,
+    playResumeSound,
     pauseSound,
     replaySound,
     INITIAL_STATE
@@ -21,17 +21,19 @@ export default {
                 return setExperimentId(fromJS(action.experimentId), state);
             case 'SET_QUESTIONS':
                 return setQuestions(fromJS(action.questions), state);
-            case 'PLAY_SOUND':
-                return playSound(fromJS(action.name), state);
-            case 'PAUSE_SOUND':
-                return pauseSound(fromJS(action.name), state);
-            case 'REPLAY_SOUND':
-                return replaySound(fromJS(action.name), state);
             case 'NEXT':
                 return next(state);
-            case 'RESPOND':
-                return state.update('active', activeState => respond(activeState, fromJS(action.response)));
+            // TODO: DRY this up with a sub-reducer
+            case 'UPDATE_CHOICE':
+                return state.update('active', active => updateChoice(fromJS(action.response), active));
+            case 'PLAY_RESUME_SOUND':
+                return state.update('active', active => playResumeSound(fromJS(action.name), active));
+            case 'PAUSE_SOUND':
+                return state.update('active', active => pauseSound(fromJS(action.name), active));
+            case 'REPLAY_SOUND':
+                return state.update('active', active => replaySound(fromJS(action.name), active));
         }
+
         return state;
     }
 }

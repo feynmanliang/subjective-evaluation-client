@@ -5,9 +5,13 @@ import randomSubset from 'random-array-subset';
 
 export const INITIAL_STATE = fromJS({
     experimentId: undefined,
-    questions: [],
-    responses: [],
-    active: {}
+    questions: List(),
+    responses: List(),
+    active: {
+        nowPlaying: undefined,
+        numPlayResumes: Map(),
+        numReplays: Map(),
+    }
 });
 
 function generateQuestions(experimentData) {
@@ -27,7 +31,8 @@ function generateQuestions(experimentData) {
         // the originals are the "correct" responses
         const correctChoices = randomSubset(R.range(0, original.size), NUM_ORIG_PER_Q).map(i => original.get(i));
         const incorrectChoices = randomSubset(R.range(0, generated.size), NUM_GEN_PER_Q).map(i => generated.get(i));
-        const correctIndex = randomSubset(R.range(0, numChoices), NUM_ORIG_PER_Q)[0]; // TODO: support multiple correct
+        // TODO: support multiple correct
+        const correctIndex = randomSubset(R.range(0, numChoices), NUM_ORIG_PER_Q)[0];
 
         return {
             experimentId,
@@ -50,7 +55,7 @@ export const setExperimentId = R.curry((id, state) =>
 export const setQuestions = R.curry((questions, state) =>
     state.set('questions', questions));
 
-export function next(state) {
+export const next = (state) => {
     const questions = state.get('questions');
     const activeQuestion = state.getIn(['active','question']);
     const activeResponse = state.getIn(['active','response']);
@@ -60,6 +65,8 @@ export function next(state) {
         active: questions.size > 0 ?
             {
                 question: questions.first(),
+                numPlayResumes: Map(),
+                numReplays: Map()
             } :
             undefined,
         questions: questions.rest(),
@@ -68,7 +75,25 @@ export function next(state) {
     });
 }
 
-export const respond = R.curry((activeState, response) =>
-    activeState.merge({
+export const updateChoice = R.curry((response, active) =>
+    active.merge({
         response
     }));
+
+export const playResumeSound = R.curry((name, active) =>
+    active
+        .set('nowPlaying', name)
+        .updateIn(['numPlayResumes', name], 0, n => (n + 1))
+);
+
+export const pauseSound = R.curry((name, active) =>
+    active
+        .set('nowPlaying', undefined)
+);
+
+export const replaySound = R.curry((name, active) =>
+    active
+        .set('nowPlaying', name)
+        .updateIn(['numReplays', name], 0, n => (n + 1))
+);
+

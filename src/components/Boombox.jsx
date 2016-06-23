@@ -1,11 +1,21 @@
 import React,{Component,PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { connect } from 'react-redux';
 
-export default class Boombox extends Component {
+import * as actionCreators from '../redux/action_creators';
+
+const { object, string, func } = PropTypes;
+
+export class Boombox extends Component {
   static propTypes = {
-    boombox: PropTypes.object.isRequired,
-    name: PropTypes.string.isRequired,
-    mp3Path: PropTypes.string.isRequired
+    boombox: object.isRequired,
+    name: string.isRequired,
+    mp3Path: string.isRequired,
+    // injected by connect()
+    nowPlaying: string,
+    playResumeSound: func.isRequired,
+    pauseSound: func.isRequired,
+    replaySound: func.isRequired,
   };
 
   componentWillMount() {
@@ -17,6 +27,7 @@ export default class Boombox extends Component {
         }
       ]
     };
+    // TODO: manage boombox in redux state
     this.props.boombox.load(this.props.name, options);
   }
 
@@ -27,29 +38,30 @@ export default class Boombox extends Component {
   }
 
   isPlaying() {
-    const thisBoombox = this.props.boombox.get(this.props.name);
-    return (thisBoombox.state.time.paused === undefined)
-      && (thisBoombox.state.time.playback !== undefined);
+    return this.props.nowPlaying === this.props.name;
   }
 
   onPlayClick() {
     this.stopOtherSounds();
 
-    const thisBoombox = this.props.boombox.get(this.props.name);
-    if (thisBoombox.state.time.playback === undefined) {
-      thisBoombox.play();
+    const webaudio = this.props.boombox.get(this.props.name);
+    if (webaudio.state.time.playback === undefined) {
+      webaudio.play();
     } else {
-      thisBoombox.resume();
+      webaudio.resume();
     }
+    this.props.playResumeSound(this.props.name);
   }
 
   onPauseClick() {
     this.props.boombox.get(this.props.name).pause();
+    this.props.pauseSound(this.props.name);
   }
 
   onReplayClick() {
     this.stopOtherSounds();
     this.props.boombox.get(this.props.name).replay();
+    this.props.replaySound(this.props.name);
   }
 
   playPauseButton() {
@@ -69,3 +81,10 @@ export default class Boombox extends Component {
     </div>
   }
 }
+
+export const BoomboxContainer = connect(
+  (state) => ({
+    nowPlaying: state.getIn(['main', 'active', 'nowPlaying'])
+  }),
+  actionCreators
+)(Boombox)

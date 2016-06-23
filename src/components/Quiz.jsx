@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 
 import * as actionCreators from '../redux/action_creators';
 
-import Boombox from './Boombox';
-
+import { BoomboxContainer } from './Boombox';
 
 const {contains, listOf} = ImmutablePropTypes
 const {string, number, func} = PropTypes;
@@ -26,7 +25,7 @@ export class Quiz extends Component {
     response: contains({
       choiceIndex: number.isRequired
     }),
-    respond: func.isRequired,
+    updateChoice: func.isRequired,
     next: func.isRequired,
     navigateTo: func.isRequired
   };
@@ -64,10 +63,10 @@ export class Quiz extends Component {
       return this.props.question.get('choices').map((choice,index) =>
           <div key={choice.get('name')}>
             <button className={"ui button" + (this.isChoiceSelected(index) ? " active" : "")}
-                    onClick={() => this.props.respond({ choiceIndex: index })}>
+                    onClick={() => this.props.updateChoice({ choiceIndex: index })}>
               <h1>{choice.get('name')}</h1>
             </button>
-            <Boombox boombox={this.boombox}
+            <BoomboxContainer boombox={this.boombox}
                      name={choice.get('name')}
                      mp3Path={choice.get('url')} />
             <br />
