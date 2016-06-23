@@ -1,17 +1,17 @@
 import 'babel-polyfill' // required for fetch
 
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
 import configureStore from './redux/store';
 import { setExperiment } from './redux/action_creators';
 
 import MainLayout from './components/MainLayout';
-import {QuizContainer} from './components/Quiz';
-import Results from './components/Results';
+import { QuizContainer } from './components/Quiz';
+import { ResultsContainer } from './components/Results';
 
 // experimental config fetched from remote server
 // TODO: make this an async request
@@ -50,10 +50,10 @@ const history = syncHistoryWithStore(browserHistory, store, {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route component={MainLayout}>
-        <Route path="/" component={QuizContainer} />
-        <Route path="/results" component={Results} />
+    <Router history={history}>
+      <Route path="/" component={MainLayout}>
+        <IndexRoute component={QuizContainer} />
+        <Route path="results" component={ResultsContainer} />
       </Route>
     </Router>
   </Provider>,

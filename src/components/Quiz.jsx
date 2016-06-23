@@ -1,8 +1,8 @@
 import R from 'ramda';
 
 import React, { Component, PropTypes } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
 import * as actionCreators from '../redux/action_creators';
@@ -22,7 +22,7 @@ export class Quiz extends Component {
         url: string.isRequired
       })).isRequired,
       correctIndex: number.isRequired
-    }).isRequired,
+    }),
     response: contains({
       choiceIndex: number.isRequired
     }),
