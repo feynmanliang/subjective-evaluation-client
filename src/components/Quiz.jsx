@@ -1,15 +1,15 @@
 import R from 'ramda';
 
-import React,{Component,PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import * as actionCreators from '../redux/action_creators';
 
 import Boombox from './Boombox';
 
-const boombox = require('boombox-js');
 
 const {contains, listOf} = ImmutablePropTypes
 const {string, number, func} = PropTypes;
@@ -35,7 +35,8 @@ export class Quiz extends Component {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 
-    boombox.setup({
+    this.boombox = require('boombox-js');
+    this.boombox.setup({
       webaudio: {
         //use: false // force override
       },
@@ -48,6 +49,11 @@ export class Quiz extends Component {
     });
   }
 
+  componentWillUpdate() {
+    // TODO: use named path
+    if (this.props.question === undefined) this.props.dispatch(push('/results'));
+  }
+
   getChoices() {
     if (this.props.question) {
       return this.props.question.get('choices').map((choice,index) =>
@@ -56,13 +62,18 @@ export class Quiz extends Component {
                     onClick={() => this.props.respond({ choiceIndex: index })}>
               <h1>{choice.get('name')}</h1>
             </button>
-            <Boombox boombox={boombox}
+            <Boombox boombox={this.boombox}
                      name={choice.get('name')}
                      mp3Path={choice.get('url')} />
             <br />
           </div>
       );
     }
+  }
+
+  onClickNext() {
+    this.boombox.pause();
+    this.props.next();
   }
 
   isChosen(index) {
@@ -75,7 +86,7 @@ export class Quiz extends Component {
         {this.getChoices()}
       </div>
       <button className={"ui button"}
-              onClick={this.props.next}>
+              onClick={::this.onClickNext}>
         Next Question
       </button>
     </div>;
@@ -84,8 +95,8 @@ export class Quiz extends Component {
 
 export const QuizContainer = connect(
   (state) => ({
-    question: state.getIn(['active', 'question']),
-    response: state.getIn(['active', 'response'])
+    question: state.getIn(['main', 'active', 'question']),
+    response: state.getIn(['main', 'active', 'response'])
   }),
   actionCreators
 )(Quiz);

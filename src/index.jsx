@@ -2,11 +2,12 @@ import 'babel-polyfill' // required for fetch
 
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory} from 'react-router';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
+import { Router, Route, browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 
 import configureStore from './redux/store';
-import {setExperiment} from './redux/action_creators';
+import { setExperiment } from './redux/action_creators';
 
 import MainLayout from './components/MainLayout';
 import {QuizContainer} from './components/Quiz';
@@ -41,14 +42,20 @@ const experimentData = {
 const store = configureStore();
 store.dispatch(setExperiment(experimentData));
 
-const routes = <Route component={MainLayout}>
-  <Route path="/" component={QuizContainer} />
-  <Route path="/results" component={Results} />
-</Route>;
+const history = syncHistoryWithStore(browserHistory, store, {
+    selectLocationState (state) {
+        return state.get('routing').toJS();
+    }
+});
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hashHistory}>{routes}</Router>
+    <Router history={browserHistory}>
+      <Route component={MainLayout}>
+        <Route path="/" component={QuizContainer} />
+        <Route path="/results" component={Results} />
+      </Route>
+    </Router>
   </Provider>,
   document.getElementById('root'));
 
@@ -63,7 +70,7 @@ ReactDOM.render(
 //   })
 //   .then((questions) => {
 //     ReactDOM.render(
-//       <Router history={hashHistory}>{routes}</Router>,
+//       <Router history={browserHistory}>{routes}</Router>,
 //       document.getElementById('root'));
 //   });
 
