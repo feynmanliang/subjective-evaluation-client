@@ -20,7 +20,14 @@ export default class Boombox extends Component {
     this.props.boombox.load(this.props.name, options);
   }
 
+  stopOtherSounds() {
+    Object.keys(this.props.boombox.pool)
+      .filter(k => k !== this.props.name)
+      .map(name => this.props.boombox.get(name).stop());
+  }
+
   onPlayClick() {
+    this.stopOtherSounds();
     this.props.boombox.get(this.props.name).play();
   }
   onStopClick() {
@@ -30,9 +37,11 @@ export default class Boombox extends Component {
     this.props.boombox.get(this.props.name).pause();
   }
   onResumeClick() {
+    this.stopOtherSounds();
     this.props.boombox.get(this.props.name).resume();
   }
   onReplayClick() {
+    this.stopOtherSounds();
     this.props.boombox.get(this.props.name).replay();
   }
   onVolumeChange(e) {
