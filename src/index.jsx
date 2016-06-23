@@ -19,21 +19,21 @@ const experimentData = {
     "original": [
         {
             "name": "Beethoven",
-            "url": "http://www.midiworld.com/classic.htm/beethoven.htm"
+            "url": "/beethoven.mp3"
         },
         {
-            "name": "Bach",
-            "url": "http://www.midiworld.com/midis/other/c1/J_C_Bach_Ach_dass_ich_Wassers_gnug_hatte.mid"
+            "name": "Chopin",
+            "url": "/chopin.mp3"
         }
     ],
     "generated": [
         {
-            "name": "Hindemith",
-            "url": "http://www.midiworld.com/midis/other/c1/hindbsn1.mid"
+            "name": "Joplin",
+            "url": "/joplin.mp3"
         },
         {
-            "name": "Poulenc",
-            "url": "http://www.midiworld.com/midis/other/poulenc/poulcmo1.mid"
+            "name": "Largo",
+            "url": "/largo.mp3"
         }
     ]
 };
