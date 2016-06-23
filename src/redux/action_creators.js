@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux';
+
 export function setExperiment(experimentData) {
   return {
     type: 'SET_EXPERIMENT',
@@ -16,4 +18,8 @@ export function next() {
   return {
     type: 'NEXT'
   };
+}
+
+export function navigateTo(path) {
+  return push(path);
 }

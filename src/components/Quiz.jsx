@@ -4,7 +4,6 @@ import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 
 import * as actionCreators from '../redux/action_creators';
 
@@ -28,7 +27,8 @@ export class Quiz extends Component {
       choiceIndex: number.isRequired
     }),
     respond: func.isRequired,
-    next: func.isRequired
+    next: func.isRequired,
+    navigateTo: func.isRequired
   };
 
   constructor(props) {
@@ -49,9 +49,10 @@ export class Quiz extends Component {
     });
   }
 
-  componentWillUpdate() {
+  componentWillReceiveProps(nextProps) {
     // TODO: use named path
-    if (this.props.question === undefined) this.props.dispatch(push('/results'));
+    // TODO: move app logic in reducer
+    if (nextProps.question === undefined) this.props.navigateTo('/results');
   }
 
   getChoices() {
