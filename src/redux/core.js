@@ -9,8 +9,10 @@ export const INITIAL_STATE = fromJS({
     responses: List(),
     active: {
         nowPlaying: undefined,
-        numPlayResumes: Map(),
-        numReplays: Map(),
+        metrics: fromJS({
+            numPlayResumes: Map(),
+            numReplays: Map()
+        }),
     }
 });
 
@@ -62,16 +64,18 @@ export const next = (state) => {
     const responses = state.get('responses');
 
     return state.merge({
-        active: questions.size > 0 ?
-            {
-                question: questions.first(),
+        active: questions.size > 0 ? {
+            question: questions.first(),
+            metrics: fromJS({
                 numPlayResumes: Map(),
                 numReplays: Map()
-            } :
-            undefined,
+            }),
+        } : undefined,
         questions: questions.rest(),
         responses: (activeResponse && activeQuestion) ?
-            responses.push(activeQuestion.merge(activeResponse)) : responses,
+            responses.push(activeQuestion
+                           .merge(activeResponse)
+                           .merge(state.getIn(['active', 'metrics']))) : responses,
     });
 }
 
@@ -83,7 +87,7 @@ export const updateChoice = R.curry((response, active) =>
 export const playResumeSound = R.curry((name, active) =>
     active
         .set('nowPlaying', name)
-        .updateIn(['numPlayResumes', name], 0, n => (n + 1))
+        .updateIn(['metrics','numPlayResumes', name], 0, n => (n + 1))
 );
 
 export const pauseSound = R.curry((name, active) =>
@@ -94,6 +98,6 @@ export const pauseSound = R.curry((name, active) =>
 export const replaySound = R.curry((name, active) =>
     active
         .set('nowPlaying', name)
-        .updateIn(['numReplays', name], 0, n => (n + 1))
+        .updateIn(['metrics','numReplays', name], 0, n => (n + 1))
 );
 
