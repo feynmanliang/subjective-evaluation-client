@@ -18,6 +18,3 @@ export default class MainLayout extends Component {
   }
 }
 
-// TODO: PropTypes
-// TODO: render quiz
-// <Quiz active={active} questions={this.questions} />

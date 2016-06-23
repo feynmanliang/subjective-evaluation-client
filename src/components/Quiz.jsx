@@ -25,6 +25,8 @@ export class Quiz extends Component {
     response: contains({
       choiceIndex: number.isRequired
     }),
+    questionNumber: number.isRequired,
+    totalNumberQuestions: number.isRequired,
     updateChoice: func.isRequired,
     next: func.isRequired,
     navigateTo: func.isRequired
@@ -91,7 +93,7 @@ export class Quiz extends Component {
 
   render() {
     return <div className="quiz">
-      <table className="ui compact celled definition table">
+      <table className="ui compact celled unstackable table">
         <thead>
           <tr>
             <th></th>
@@ -107,6 +109,7 @@ export class Quiz extends Component {
           <tr>
             <th></th>
             <th>
+              Question {this.props.questionNumber} out of {this.props.totalNumberQuestions}
               <button className="ui right floated small primary button"
                       onClick={::this.onClickNext}
                       disabled={!this.props.response}>
@@ -123,7 +126,10 @@ export class Quiz extends Component {
 export const QuizContainer = connect(
   (state) => ({
     question: state.getIn(['main', 'active', 'question']),
-    response: state.getIn(['main', 'active', 'response'])
+    response: state.getIn(['main', 'active', 'response']),
+    questionNumber: state.getIn(['main', 'responses']).size + 1,
+    totalNumberQuestions: state.getIn(['main', 'questions']).size + state.getIn(['main', 'responses']).size + 1,
   }),
   actionCreators
 )(Quiz);
+
