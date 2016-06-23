@@ -1,15 +1,19 @@
 import React,{Component,PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import Boombox from './Boombox';
+
+const {shape, array, string, number} = PropTypes;
+
 export default class QuestionResponse extends Component {
   static propTypes = {
-    question: PropTypes.shape({
-      experimentId: PropTypes.string.isRequired,
-      choices: PropTypes.array.isRequired,
-      correctIndex: PropTypes.number.isRequired
+    question: shape({
+      experimentId: string.isRequired,
+      choices: array.isRequired,
+      correctIndex: number.isRequired
     }).isRequired,
-    response: PropTypes.shape({
-      choiceIndex: PropTypes.number.isRequired
+    response: shape({
+      choiceIndex: number.isRequired
     })
   };
 
@@ -19,7 +23,19 @@ export default class QuestionResponse extends Component {
   }
 
   getChoices() {
-    return this.props.question ? this.props.question.choices : [];
+    if (this.props.question) {
+      console.log(this.props.question);
+      return this.props.question.choices.map((choice,index) =>
+          <div key={choice.name}>
+            <button className={"ui button" + (this.isChosen() ? " active" : "")}
+                    onClick={() => this.props.choose(choice.url)}>
+              <h1>{choice.name}</h1>
+            </button>
+            <Boombox />
+            <br />
+          </div>
+      );
+    }
   }
 
   isChosen(index) {
@@ -28,13 +44,7 @@ export default class QuestionResponse extends Component {
 
   render() {
     return <div className="choices">
-      {this.getChoices().map((choice,index) =>
-        <button key={choice.name}
-                className={"ui button" + (this.isChosen() ? " active" : "")}
-                onClick={() => this.props.choose(choice.url)}>
-          <h1>{choice.name}</h1>
-        </button>
-      )}
+      {this.getChoices()}
     </div>;
   }
 };
