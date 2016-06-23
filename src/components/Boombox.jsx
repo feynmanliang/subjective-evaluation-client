@@ -66,19 +66,23 @@ export class Boombox extends Component {
 
   playPauseButton() {
     if (this.isPlaying()) {
-      return <i ref="pause" className="pause icon" onClick={::this.onPauseClick}></i>
+      return <button className="ui button" onClick={::this.onPauseClick}>
+        <i className="pause icon"></i>
+      </button>;
     } else {
-      return <i ref="play" className="play icon" onClick={::this.onPlayClick}></i>
+      return <button className="ui button" onClick={::this.onPlayClick}>
+        <i ref="play" className="play icon"></i>
+      </button>;
     }
   }
 
   render() {
-    return <div className="boombox">
-      <div className="btn-group">
-        {::this.playPauseButton()}
-        <i ref="replay" className="fast backward icon" onClick={::this.onReplayClick}></i>
-      </div>
-    </div>
+    return <div className="ui icon buttons">
+      {::this.playPauseButton()}
+      <button className="ui button" onClick={::this.onReplayClick}>
+        <i ref="replay" className="fast backward icon"></i>
+      </button>
+    </div>;
   }
 }
 

@@ -58,22 +58,28 @@ export class Quiz extends Component {
   }
 
   isChoiceSelected(index) {
-    return this.props.response && (this.props.response.choiceIndex === index);
+    return this.props.response && (this.props.response.get("choiceIndex") === index);
   }
 
   getChoices() {
     if (this.props.question) {
       return this.props.question.get('choices').map((choice,index) =>
-          <div key={choice.get('name')}>
-            <button className={"ui button" + (this.isChoiceSelected(index) ? " active" : "")}
-                    onClick={() => this.props.updateChoice({ choiceIndex: index })}>
-              <h1>{choice.get('name')}</h1>
-            </button>
-            <BoomboxContainer boombox={this.boombox}
-                     name={choice.get('name')}
-                     mp3Path={choice.get('url')} />
-            <br />
-          </div>
+          <tr key={choice.get('name')}
+              className={this.isChoiceSelected(index) ? " active" : ""}>
+            <td className="collapsing">
+              <div class="ui fitted">
+                <button className="ui secondary button"
+                        onClick={() => this.props.updateChoice({ choiceIndex: index })}>
+                  Select
+                </button>
+              </div>
+            </td>
+            <td>
+              <BoomboxContainer boombox={this.boombox}
+                      name={choice.get('name')}
+                      mp3Path={choice.get('url')} />
+            </td>
+          </tr>
       );
     }
   }
@@ -85,14 +91,31 @@ export class Quiz extends Component {
 
   render() {
     return <div className="quiz">
-      <div className="choices">
-        {this.getChoices()}
-      </div>
-      <button className={"ui button submit"}
-              onClick={::this.onClickNext}
-              disabled={!this.props.response}>
-        Submit Answer
-      </button>
+      <table className="ui compact celled definition table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>
+              Select the music most similar to Bach
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.getChoices()}
+        </tbody>
+        <tfoot class="full-width">
+          <tr>
+            <th></th>
+            <th>
+              <button className="ui right floated small primary button"
+                      onClick={::this.onClickNext}
+                      disabled={!this.props.response}>
+                Submit
+              </button>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
     </div>;
   }
 };
