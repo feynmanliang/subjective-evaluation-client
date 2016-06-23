@@ -55,11 +55,15 @@ export class Quiz extends Component {
     if (nextProps.question === undefined) this.props.navigateTo('/results');
   }
 
+  isChoiceSelected(index) {
+    return this.props.response && (this.props.response.choiceIndex === index);
+  }
+
   getChoices() {
     if (this.props.question) {
       return this.props.question.get('choices').map((choice,index) =>
           <div key={choice.get('name')}>
-            <button className={"ui button" + (this.isChosen() ? " active" : "")}
+            <button className={"ui button" + (this.isChoiceSelected(index) ? " active" : "")}
                     onClick={() => this.props.respond({ choiceIndex: index })}>
               <h1>{choice.get('name')}</h1>
             </button>
@@ -77,18 +81,15 @@ export class Quiz extends Component {
     this.props.next();
   }
 
-  isChosen(index) {
-    return this.props.response && this.props.response.choiceIndex === index;
-  }
-
   render() {
     return <div className="quiz">
       <div className="choices">
         {this.getChoices()}
       </div>
-      <button className={"ui button"}
-              onClick={::this.onClickNext}>
-        Next Question
+      <button className={"ui button submit"}
+              onClick={::this.onClickNext}
+              disabled={!this.props.response}>
+        Submit Answer
       </button>
     </div>;
   }
