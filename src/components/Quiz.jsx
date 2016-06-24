@@ -69,7 +69,7 @@ export class Quiz extends Component {
           <tr key={choice.get('name')}
               className={this.isChoiceSelected(index) ? " active" : ""}>
             <td className="collapsing">
-              <div class="ui fitted">
+              <div className="ui fitted">
                 <button className="ui secondary button"
                         onClick={() => this.props.updateChoice({ choiceIndex: index })}>
                   Select
@@ -105,7 +105,7 @@ export class Quiz extends Component {
         <tbody>
           {this.getChoices()}
         </tbody>
-        <tfoot class="full-width">
+        <tfoot className="full-width">
           <tr>
             <th></th>
             <th>
