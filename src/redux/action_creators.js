@@ -45,3 +45,9 @@ export function replaySound(name) {
   }
 }
 
+export function submitResponses(name) {
+  return {
+    type: 'SUBMIT_RESPONSES',
+  }
+}
+

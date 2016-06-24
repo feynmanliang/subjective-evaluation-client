@@ -3,8 +3,10 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
+import * as actionCreators from '../redux/action_creators';
+
 const { contains, listOf } = ImmutablePropTypes
-const { number, string } = PropTypes;
+const { number, string, bool, func } = PropTypes;
 
 export class Results extends Component {
   static propTypes = {
@@ -18,11 +20,17 @@ export class Results extends Component {
         choiceIndex: number.isRequired
       })
     ).isRequired,
+    submitted: bool.isRequired,
+    submitResponses: func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
+
+  componentDidMount() {
+    if (!this.props.submitted) this.props.submitResponses();
   }
 
   percentCorrect() {
@@ -81,6 +89,8 @@ class ResponseItem extends Component {
 
 export const ResultsContainer = connect(
   (state) => ({
-    responses: state.getIn(['main', 'responses'])
-  })
+    responses: state.getIn(['main', 'responses']),
+    submitted: state.getIn(['main', 'submitted'])
+  }),
+  actionCreators
 )(Results);

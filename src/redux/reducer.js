@@ -9,6 +9,7 @@ import {
     playResumeSound,
     pauseSound,
     replaySound,
+    submitResponses,
     INITIAL_STATE
 } from './core';
 
@@ -32,6 +33,8 @@ export default {
                 return state.update('active', active => pauseSound(fromJS(action.name), active));
             case 'REPLAY_SOUND':
                 return state.update('active', active => replaySound(fromJS(action.name), active));
+            case 'SUBMIT_RESPONSES':
+                return submitResponses(state);
         }
 
         return state;

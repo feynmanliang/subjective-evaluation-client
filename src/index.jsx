@@ -13,7 +13,7 @@ import MainLayout from './components/MainLayout';
 import About from './components/About';
 import { ChallengeContainer } from './components/Challenge';
 
-fetch("https://bachbot.blob.core.windows.net/experiments/experiment.json")
+fetch("experiment.json")
   .then(response => response.json())
   .then(experimentData => {
     const store = configureStore();

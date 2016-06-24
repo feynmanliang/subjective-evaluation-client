@@ -13,7 +13,8 @@ export const INITIAL_STATE = fromJS({
             numPlayResumes: Map(),
             numReplays: Map()
         }),
-    }
+    },
+    submitted: false
 });
 
 function generateQuestions(experimentData) {
@@ -101,3 +102,11 @@ export const replaySound = R.curry((name, active) =>
         .updateIn(['metrics','numReplays', name], 0, n => (n + 1))
 );
 
+export const submitResponses = (state) => {
+    $.ajax({
+        url: 'http://localhost:3000/submitResponse',
+        type: 'POST',
+        data: responses: state.get('responses').toJSON()
+    });
+    return state.set('submitted', true);
+};
