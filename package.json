@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "start": "webpack-dev-server -d --progress --colors",
+    "start": "webpack-dev-server -d --progress --colors --host 0.0.0.0",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch"
   },
@@ -43,6 +43,7 @@
     "babel-runtime": "^6.9.2",
     "boombox.js": "^1.0.9",
     "immutable": "^3.8.1",
+    "random-array-subset": "^1.0.2",
     "react": "^15.1.0",
     "react-addons-pure-render-mixin": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
