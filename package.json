@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server -d --progress --colors",
-    "build": "webpack --progress -p",
+    "build": "webpack -p --config webpack-prod.config.js --progress --colors",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch"
   },

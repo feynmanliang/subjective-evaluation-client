@@ -13,7 +13,7 @@ import MainLayout from './components/MainLayout';
 import About from './components/About';
 import { ChallengeContainer } from './components/Challenge';
 
-fetch('http://localhost:3000/experiment.json')
+fetch('https://bachbot-server.azurewebsites.net/experiment.json')
   .then(response => response.json())
   .then(experimentData => {
     const store = configureStore();
