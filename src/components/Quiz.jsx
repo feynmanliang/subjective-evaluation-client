@@ -1,5 +1,3 @@
-import R from 'ramda';
-
 import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -9,11 +7,12 @@ import * as actionCreators from '../redux/action_creators';
 
 import { BoomboxContainer } from './Boombox';
 
-const {contains, listOf} = ImmutablePropTypes
-const {string, number, func} = PropTypes;
+const { contains, listOf } = ImmutablePropTypes;
+const { string, number, func, object } = PropTypes;
 
 export class Quiz extends Component {
   static propTypes = {
+    boombox: object.isRequired,
     question: contains({
       experimentId: string.isRequired,
       choices: listOf(contains({
@@ -29,34 +28,11 @@ export class Quiz extends Component {
     totalNumberQuestions: number.isRequired,
     updateChoice: func.isRequired,
     next: func.isRequired,
-    navigateTo: func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-
-    this.boombox = require('boombox-js');
-    this.boombox.setup({
-      webaudio: {
-        //use: false // force override
-      },
-      htmlaudio: {
-        //use: true // force override
-      },
-      htmlvideo: {
-        //use: true // force override
-      }
-    });
-  }
-
-  componentWillUpdate(nextProps) {
-    // TODO: use named path
-    // TODO: move app logic in reducer
-    if (nextProps.question === undefined) {
-      this.boombox.power(this.boombox.POWER_OFF);
-      this.props.navigateTo('/results');
-    }
   }
 
   isChoiceSelected(index) {
@@ -77,7 +53,7 @@ export class Quiz extends Component {
               </div>
             </td>
             <td>
-              <BoomboxContainer boombox={this.boombox}
+              <BoomboxContainer boombox={this.props.boombox}
                       name={choice.get('name')}
                       mp3Path={choice.get('url')} />
             </td>
@@ -87,12 +63,12 @@ export class Quiz extends Component {
   }
 
   onClickNext() {
-    this.boombox.pause();
+    this.props.boombox.pause();
     this.props.next();
   }
 
   render() {
-    return <div className="quiz">
+    return <div className="ui container">
       <table className="ui compact celled unstackable table">
         <thead>
           <tr>
@@ -121,7 +97,7 @@ export class Quiz extends Component {
       </table>
     </div>;
   }
-};
+}
 
 export const QuizContainer = connect(
   (state) => ({

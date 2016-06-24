@@ -10,8 +10,8 @@ import configureStore from './redux/store';
 import { setExperiment } from './redux/action_creators';
 
 import MainLayout from './components/MainLayout';
-import { QuizContainer } from './components/Quiz';
-import { ResultsContainer } from './components/Results';
+import About from './components/About';
+import { ChallengeContainer } from './components/Challenge';
 
 fetch('http://localhost:3000/experiment.json')
   .then(response => response.json())
@@ -31,8 +31,8 @@ fetch('http://localhost:3000/experiment.json')
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={MainLayout}>
-            <IndexRoute component={QuizContainer} />
-            <Route path="results" component={ResultsContainer} />
+            <IndexRoute component={About} />
+            <Route path="quiz" component={ChallengeContainer} />
           </Route>
         </Router>
       </Provider>,

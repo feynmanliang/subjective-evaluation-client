@@ -37,10 +37,17 @@ export class Results extends Component {
 
   render() {
     const { responses } = this.props;
-    return <div className="results">
-      You scored {this.percentCorrect()}%!
-      {responses.map((response, idx) => <ResponseItem key={idx} {...response.toObject()} />)}
-    </div>
+    return <div className="ui vertical stripe segment">
+      <div className="ui text container">
+
+        <h3 className="ui header">Results</h3>
+        You scored {this.percentCorrect()}%!
+
+        <div className="ui horizontal divider"></div>
+
+        {responses.map((response, idx) => <ResponseItem key={idx} {...response.toObject()} />)}
+      </div>
+    </div>;
   }
 }
 
