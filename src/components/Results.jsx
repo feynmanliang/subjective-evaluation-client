@@ -41,11 +41,12 @@ export class Results extends Component {
       <div className="ui text container">
 
         <h3 className="ui header">Results</h3>
-        You scored {this.percentCorrect()}%!
+        <p>You scored {this.percentCorrect()}%!</p>
 
-        <div className="ui horizontal divider"></div>
+        <div className="ui divider"></div>
 
         {responses.map((response, idx) => <ResponseItem key={idx} {...response.toObject()} />)}
+
       </div>
     </div>;
   }

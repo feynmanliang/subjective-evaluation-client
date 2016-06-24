@@ -1,8 +1,8 @@
 import R from 'ramda';
-
 import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { connect } from 'react-redux';
+import boombox from 'boombox-js';
 
 import * as actionCreators from '../redux/action_creators';
 
@@ -20,7 +20,7 @@ export class Challenge extends Component {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 
-    this.boombox = require('boombox-js');
+    this.boombox = boombox;
     this.boombox.setup({
       webaudio: {
         //use: false // force override
@@ -35,7 +35,7 @@ export class Challenge extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (!this.props.hasActiveQuestion) {
+    if (!nextProps.hasActiveQuestion) {
       this.boombox.power(this.boombox.POWER_OFF);
     }
   }

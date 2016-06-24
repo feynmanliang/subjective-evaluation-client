@@ -33,7 +33,7 @@ export default class About extends Component {
               samples are Bach's own work.
             </p>
 
-            <div className="ui horizontal header divider"></div>
+            <div className="ui header divider"></div>
 
             <h3 className="ui header">What is BachBot</h3>
             <p>
@@ -44,12 +44,11 @@ export default class About extends Component {
               and better understand the limits of AI.
             </p>
             <p>
-              The project utilizes a memory for model known as 
-              <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">long short-term memory</a>.
+              The project utilizes a memory for model known as <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">long short-term memory</a>.
               For more details, check out <a href="https://github.com/feynmanliang/bachbot">our code on Github</a>.
             </p>
 
-            <div className="ui horizontal header divider"></div>
+            <div className="ui header divider"></div>
 
             <h3 className="ui header">Who we are</h3>
             <div className="ui list">

@@ -54,8 +54,8 @@ export class Quiz extends Component {
             </td>
             <td>
               <BoomboxContainer boombox={this.props.boombox}
-                      name={choice.get('name')}
-                      mp3Path={choice.get('url')} />
+                name={choice.get('name')}
+                mp3Path={choice.get('url')} />
             </td>
           </tr>
       );
@@ -68,33 +68,40 @@ export class Quiz extends Component {
   }
 
   render() {
-    return <div className="ui container">
-      <table className="ui compact celled unstackable table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>
-              Select the music most similar to Bach
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.getChoices()}
-        </tbody>
-        <tfoot className="full-width">
-          <tr>
-            <th></th>
-            <th>
-              Question {this.props.questionNumber} out of {this.props.totalNumberQuestions}
-              <button className="ui right floated small primary button"
-                      onClick={::this.onClickNext}
-                      disabled={!this.props.response}>
-                Submit
-              </button>
-            </th>
-          </tr>
-        </tfoot>
-      </table>
+    return <div className="ui vertical stripe segment">
+      <div className="ui text container">
+
+        <h3 className="ui header">The BachBot Challenge</h3>
+
+        <div className="ui divider"></div>
+
+        <table className="ui compact celled unstackable table" style={{ margin: "2em 0em" }}>
+          <thead>
+            <tr>
+              <th></th>
+              <th>
+                Select the music most similar to Bach
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.getChoices()}
+          </tbody>
+          <tfoot className="full-width">
+            <tr>
+              <th></th>
+              <th>
+                Question {this.props.questionNumber} out of {this.props.totalNumberQuestions}
+                <button className="ui right floated small primary button"
+                        onClick={::this.onClickNext}
+                        disabled={!this.props.response}>
+                  Submit
+                </button>
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>;
   }
 }
