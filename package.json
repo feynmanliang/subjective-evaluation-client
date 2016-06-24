@@ -12,7 +12,7 @@
   "scripts": {
     "start": "webpack-dev-server -d --progress --colors",
     "build": "webpack -p --config webpack-prod.config.js --progress --colors",
-    "deploy": "npm run build && azure storage blob upload ./dist/bundle.js client ./dist/bundle.js",
+    "deploy": "npm run build && azure storage blob upload ./dist/bundle.js client ./bundle.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch"
   },
