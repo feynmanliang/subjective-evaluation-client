@@ -1,5 +1,5 @@
 import {fromJS} from 'immutable';
-import {reducer as formReducer} from 'redux-form';
+import {reducer as formReducer} from 'redux-form/immutable';
 
 import {
     setExperiment,
