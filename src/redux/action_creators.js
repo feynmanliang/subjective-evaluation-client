@@ -50,3 +50,10 @@ export function submitResponses() {
     type: 'SUBMIT_RESPONSES',
   }
 }
+
+export function submitUserInfo(userInfo) {
+  return {
+    type: 'SUBMIT_USER_INFO',
+    userInfo
+  }
+}

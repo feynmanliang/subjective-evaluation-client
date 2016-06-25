@@ -113,3 +113,8 @@ export const submitResponses = (state) => {
     });
     return state.set('submitted', true);
 };
+
+export const submitUserInfo = (state, userInfo) => {
+    console.log(userInfo);
+    return state.set('userInfo', userInfo);
+};
