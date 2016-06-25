@@ -3,9 +3,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
-import * as actionCreators from '../redux/action_creators';
-
 import { BoomboxContainer } from './Boombox';
+
+import * as actionCreators from '../redux/action_creators';
 
 const { contains, listOf } = ImmutablePropTypes;
 const { string, number, func, object } = PropTypes;

@@ -50,7 +50,7 @@ export class Challenge extends Component {
       if (this.props.hasActiveQuestion) {
         return <QuizContainer boombox={this.boombox} />;
       } else {
-        return <ResultsContainer />;
+        return <ResultsContainer boombox={this.boombox} />;
       };
     }
   }
