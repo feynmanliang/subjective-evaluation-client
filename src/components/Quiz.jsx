@@ -20,7 +20,7 @@ export class Quiz extends Component {
         url: string.isRequired
       })).isRequired,
       correctIndex: number.isRequired
-    }),
+    }).isRequired,
     response: contains({
       choiceIndex: number.isRequired
     }),
@@ -40,26 +40,24 @@ export class Quiz extends Component {
   }
 
   getChoices() {
-    if (this.props.question) {
-      return this.props.question.get('choices').map((choice,index) =>
-          <tr key={choice.get('name')}
-              className={this.isChoiceSelected(index) ? " active" : ""}>
-            <td className="collapsing">
-              <div className="ui fitted">
-                <button className="ui secondary button"
-                        onClick={() => this.props.updateChoice({ choiceIndex: index })}>
-                  Select
-                </button>
-              </div>
-            </td>
-            <td>
-              <BoomboxContainer boombox={this.props.boombox}
-                name={choice.get('name')}
-                mp3Path={choice.get('url')} />
-            </td>
-          </tr>
-      );
-    }
+    return this.props.question.get('choices').map((choice,index) =>
+        <tr key={choice.get('name')}
+            className={this.isChoiceSelected(index) ? " active" : ""}>
+          <td className="collapsing">
+            <div className="ui fitted">
+              <button className="ui secondary button"
+                      onClick={() => this.props.updateChoice({ choiceIndex: index })}>
+                Select
+              </button>
+            </div>
+          </td>
+          <td>
+            <BoomboxContainer boombox={this.props.boombox}
+              name={choice.get('name')}
+              mp3Path={choice.get('url')} />
+          </td>
+        </tr>
+    );
   }
 
   onClickNext() {
