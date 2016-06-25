@@ -33,7 +33,7 @@ const UserInfoForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.submitUserInfo(props.userInfo);
-    props.navigateTo('/quiz');
+    props.next();
   }
   const { pristine, reset, submitting } = props;
   return (

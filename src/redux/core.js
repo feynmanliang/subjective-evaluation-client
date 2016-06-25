@@ -48,7 +48,6 @@ function generateQuestions(experimentData) {
     }).toList());
 }
  export const setExperiment = (experimentData, state) => R.compose(
-     next,
      setQuestions(generateQuestions(experimentData)),
      setExperimentId(experimentData.id))(state);
 

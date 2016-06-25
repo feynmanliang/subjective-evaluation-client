@@ -40,6 +40,8 @@ export class Challenge extends Component {
   componentWillUpdate(nextProps) {
     if (!nextProps.hasActiveQuestion) {
       this.boombox.power(this.boombox.POWER_OFF);
+    } else {
+      this.boombox.power(this.boombox.POWER_ON);
     }
   }
 
