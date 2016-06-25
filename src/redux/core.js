@@ -108,13 +108,13 @@ export const submitResponses = (state) => {
         //url: 'http://bachbot-server.azurewebsites.net/submitResponse',
         type: 'POST',
         data: {
-            responses: state.get('responses').toJSON()
+            responses: state.get('responses').toJSON(),
             userInfo: state.get('userInfo').toJSON()
         }
     });
     return state.set('submitted', true);
 };
 
-export const submitUserInfo = (state, userInfo) => {
-    return state.set('userInfo', userInfo);
-};
+export const submitUserInfo = R.curry((userInfo, state) =>
+    state.set('userInfo', userInfo)
+);

@@ -38,7 +38,7 @@ export default {
             case 'SUBMIT_RESPONSES':
                 return submitResponses(state);
             case 'SUBMIT_USER_INFO':
-                return submitUserInfo(state, action.userInfo);
+                return submitUserInfo(fromJS(action.userInfo), state);
         }
 
         return state;
