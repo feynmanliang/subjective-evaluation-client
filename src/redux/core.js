@@ -109,6 +109,7 @@ export const submitResponses = (state) => {
         type: 'POST',
         data: {
             responses: state.get('responses').toJSON()
+            userInfo: state.get('userInfo').toJSON()
         }
     });
     return state.set('submitted', true);
