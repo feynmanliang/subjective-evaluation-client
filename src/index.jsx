@@ -23,11 +23,14 @@ fetch("experiment.json")
     return store;
   })
   .then((store) => {
-    const history = syncHistoryWithStore(hashHistory, store, {
-        selectLocationState (state) {
-            return state.get('routing').toJS();
+    const history = syncHistoryWithStore(
+      hashHistory,
+      store,
+      {
+        selectLocationState (state) { // for react-redux-router <> immutable
+          return state.get('routing').toJS();
         }
-    });
+      });
 
     ReactDOM.render(
       <Provider store={store}>

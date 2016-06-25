@@ -115,6 +115,5 @@ export const submitResponses = (state) => {
 };
 
 export const submitUserInfo = (state, userInfo) => {
-    console.log(userInfo);
     return state.set('userInfo', userInfo);
 };
