@@ -104,9 +104,9 @@ export const replaySound = R.curry((name, active) =>
 
 export const submitResponses = (state) => {
     $.ajax({
-        url: 'http://localhost:3000/submitResponse',
+        url: 'https://bachbot-server.azurewebsites.net/submitResponse',
         type: 'POST',
-        data: responses: state.get('responses').toJSON()
+        data: state.get('responses').toJSON()
     });
     return state.set('submitted', true);
 };
