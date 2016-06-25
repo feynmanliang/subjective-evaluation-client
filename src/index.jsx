@@ -37,7 +37,6 @@ fetch("experiment.json")
         <Router history={history}>
           <Route path="/" component={MainLayout}>
             <IndexRoute component={About} />
-            <Route path="user-info" component={UserInfoForm.form} />
             <Route path="quiz" component={ChallengeContainer} />
           </Route>
         </Router>
