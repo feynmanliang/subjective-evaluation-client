@@ -3,7 +3,7 @@ import 'babel-polyfill' // required for fetch
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
 import configureStore from './redux/store';
@@ -22,7 +22,7 @@ fetch("experiment.json")
     return store;
   })
   .then((store) => {
-    const history = syncHistoryWithStore(browserHistory, store, {
+    const history = syncHistoryWithStore(hashHistory, store, {
         selectLocationState (state) {
             return state.get('routing').toJS();
         }
