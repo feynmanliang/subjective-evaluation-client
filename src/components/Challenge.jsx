@@ -6,14 +6,17 @@ import boombox from 'boombox-js';
 
 import * as actionCreators from '../redux/action_creators';
 
+import UserInfoForm from './UserInfoForm';
 import { QuizContainer } from './Quiz';
 import { ResultsContainer } from './Results';
 
-const { bool } = PropTypes;
+const { bool, func } = PropTypes;
 
 export class Challenge extends Component {
   static propTypes = {
-    hasActiveQuestion: bool.isRequired
+    hasActiveQuestion: bool.isRequired,
+    hasUserInfo: bool.isRequired,
+    navigateTo: func.isRequired
   };
 
   constructor(props) {
@@ -41,17 +44,22 @@ export class Challenge extends Component {
   }
 
   render() {
-    if (this.props.hasActiveQuestion) {
-      return <QuizContainer boombox={this.boombox} />;
+    if (!this.props.hasUserInfo) {
+      return <UserInfoForm.form />;
     } else {
-      return <ResultsContainer />;
-    };
+      if (this.props.hasActiveQuestion) {
+        return <QuizContainer boombox={this.boombox} />;
+      } else {
+        return <ResultsContainer />;
+      };
+    }
   }
 };
 
 export const ChallengeContainer = connect(
   (state) => ({
     hasActiveQuestion: state.getIn(['main', 'active', 'question']) !== undefined,
+    hasUserInfo: state.getIn(['main', 'userInfo']) !== undefined,
   }),
   actionCreators
 )(Challenge);
