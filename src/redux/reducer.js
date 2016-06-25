@@ -1,4 +1,5 @@
 import {fromJS} from 'immutable';
+import {reducer as formReducer} from 'redux-form';
 
 import {
     setExperiment,
@@ -38,5 +39,6 @@ export default {
         }
 
         return state;
-    }
+    },
+    form: formReducer
 }

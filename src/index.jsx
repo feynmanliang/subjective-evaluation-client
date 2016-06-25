@@ -12,6 +12,7 @@ import { setExperiment } from './redux/action_creators';
 import MainLayout from './components/MainLayout';
 import About from './components/About';
 import { ChallengeContainer } from './components/Challenge';
+import UserInfoForm from './components/UserInfoForm';
 
 fetch("experiment.json")
 //fetch("https://bachbot.blob.core.windows.net/experiments/experiment.json") // TODO: ship with server and read from CDN
@@ -33,6 +34,7 @@ fetch("experiment.json")
         <Router history={history}>
           <Route path="/" component={MainLayout}>
             <IndexRoute component={About} />
+            <Route path="user-info" component={UserInfoForm.form} />
             <Route path="quiz" component={ChallengeContainer} />
           </Route>
         </Router>
