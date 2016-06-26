@@ -21,6 +21,7 @@ export class Quiz extends Component {
       })).isRequired,
       correctIndex: number.isRequired
     }).isRequired,
+    startTime: number.isRequired,
     response: contains({
       choiceIndex: number.isRequired
     }),
@@ -107,6 +108,7 @@ export class Quiz extends Component {
 export const QuizContainer = connect(
   (state) => ({
     question: state.getIn(['main', 'active', 'question']),
+    startTime: state.getIn(['main', 'active', 'startTime']),
     response: state.getIn(['main', 'active', 'response']),
     questionNumber: state.getIn(['main', 'responses']).size + 1,
     totalNumberQuestions: state.getIn(['main', 'questions']).size + state.getIn(['main', 'responses']).size + 1,

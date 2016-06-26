@@ -10,6 +10,7 @@ export const INITIAL_STATE = fromJS({
     active: {
         nowPlaying: undefined,
         metrics: fromJS({
+            startTimeMillis: undefined,
             numPlayResumes: Map(),
             numReplays: Map()
         }),
@@ -61,21 +62,26 @@ export const next = (state) => {
     const questions = state.get('questions');
     const activeQuestion = state.getIn(['active','question']);
     const activeResponse = state.getIn(['active','response']);
+    const activeMetrics = state.getIn(['active', 'metrics']);
     const responses = state.get('responses');
 
     return state.merge({
         active: questions.size > 0 ? {
             question: questions.first(),
             metrics: fromJS({
+                startTimeMillis: Date.now(),
                 numPlayResumes: Map(),
                 numReplays: Map()
             }),
         } : undefined,
         questions: questions.rest(),
-        responses: (activeResponse && activeQuestion) ?
-            responses.push(activeQuestion
-                           .merge(activeResponse)
-                           .merge(state.getIn(['active', 'metrics']))) : responses,
+        responses: (activeResponse && activeQuestion) ? responses.push(
+            activeQuestion
+                .merge(activeResponse)
+                .merge(activeMetrics.merge({
+                    endTimeMillis: Date.now()
+                }))
+        ) : responses
     });
 }
 
