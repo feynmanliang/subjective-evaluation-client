@@ -82,9 +82,9 @@ class ResponseItem extends Component {
     const { choices, correctIndex, choiceIndex, boombox } = this.props;
     const isCorrect = correctIndex === choiceIndex;
     const choice = this.props.choices.get(choiceIndex);
-    return <div className={"ui message" + (isCorrect ? " positive" : " negative")}>
+    return <div className={'ui message' + (isCorrect ? ' positive' : ' negative')}>
       <div className="header">
-        {isCorrect ? "Correct! This is a Bach original." : "Incorrect! This is computer generated."}
+        {isCorrect ? 'Correct! This is a Bach original.' : 'Incorrect! This is computer generated.'}
         <BoomboxContainer boombox={boombox}
           name={choice.get('name')}
           mp3Path={choice.get('url')} />

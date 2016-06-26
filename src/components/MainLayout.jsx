@@ -48,7 +48,7 @@ export default class MainLayout extends Component {
         <div className="pusher">
           <a href="https://github.com/feynmanliang/bachbot">
             <img style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               right: 0,
               border: 0,

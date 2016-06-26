@@ -14,8 +14,10 @@ import About from './components/About';
 import { ChallengeContainer } from './components/Challenge';
 import UserInfoForm from './components/UserInfoForm';
 
-//fetch("experiment.json")
-fetch("https://bachbot.blob.core.windows.net/experiments/experiment.json") // TODO: ship with server and read from CDN
+console.log(process.env)
+
+//fetch('experiment.json')
+fetch('https://bachbot.blob.core.windows.net/experiments/experiment.json') // TODO: ship with server and read from CDN
   .then(response => response.json())
   .then(experimentData => {
     const store = configureStore();

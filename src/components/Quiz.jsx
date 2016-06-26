@@ -37,13 +37,13 @@ export class Quiz extends Component {
   }
 
   isChoiceSelected(index) {
-    return this.props.response && (this.props.response.get("choiceIndex") === index);
+    return this.props.response && (this.props.response.get('choiceIndex') === index);
   }
 
   getChoices() {
     return this.props.question.get('choices').map((choice,index) =>
         <tr key={choice.get('name')}
-            className={this.isChoiceSelected(index) ? " active" : ""}>
+            className={this.isChoiceSelected(index) ? ' active' : ''}>
           <td className="collapsing">
             <div className="ui fitted">
               <button className="ui secondary button"
@@ -74,7 +74,7 @@ export class Quiz extends Component {
 
         <div className="ui divider"></div>
 
-        <table className="ui compact celled unstackable table" style={{ margin: "2em 0em" }}>
+        <table className="ui compact celled unstackable table" style={{ margin: '2em 0em' }}>
           <thead>
             <tr>
               <th></th>
