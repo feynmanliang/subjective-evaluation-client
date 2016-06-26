@@ -52,7 +52,10 @@ export class Results extends Component {
       <div className="ui text container">
 
         <h3 className="ui header">Results</h3>
-        <p>You scored {this.percentCorrect()}%!</p>
+
+        <div className="ui divider"></div>
+
+        <p>You scored {this.percentCorrect()}%! Refresh to try again.</p>
       </div>
     </div>;
   }
