@@ -1,4 +1,4 @@
-import 'babel-polyfill' // required for fetch
+import 'whatwg-fetch';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -13,8 +13,6 @@ import MainLayout from './components/MainLayout';
 import About from './components/About';
 import { ChallengeContainer } from './components/Challenge';
 import UserInfoForm from './components/UserInfoForm';
-
-console.log(process.env)
 
 //fetch('experiment.json')
 fetch('https://bachbot.blob.core.windows.net/experiments/experiment.json') // TODO: ship with server and read from CDN
