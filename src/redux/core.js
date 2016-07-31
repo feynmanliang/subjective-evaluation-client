@@ -1,7 +1,6 @@
 import R from 'ramda';
 
 import Immutable,{Map,List,fromJS,toJS} from 'immutable';
-import randomSubset from 'random-array-subset';
 
 export const INITIAL_STATE = fromJS({
     experimentId: undefined,
@@ -18,34 +17,38 @@ export const INITIAL_STATE = fromJS({
     submitted: false
 });
 
+function randInt(max) {
+    return Math.floor(Math.random()*max);
+}
+
 function generateQuestions(experimentData) {
-    const NUM_QUESTIONS = 5;
-    // TODO: extend these to be > 1 so can have more than bach vs not
-    const NUM_GEN_PER_Q = 1;
-    const NUM_ORIG_PER_Q = 1;
-
-    const numChoices = NUM_GEN_PER_Q + NUM_ORIG_PER_Q;
-
     const experimentId = experimentData.get('id')
-    const original = experimentData.get('original')
-    const generated = experimentData.get('generated')
+    const questionGroups = experimentData.get('questions')
 
-    return fromJS(Immutable.Range(0, NUM_QUESTIONS).map(() => {
-        // TODO: make this code pure
-        // the originals are the "correct" responses
-        const correctChoices = randomSubset(R.range(0, original.size), NUM_ORIG_PER_Q).map(i => original.get(i));
-        const incorrectChoices = randomSubset(R.range(0, generated.size), NUM_GEN_PER_Q).map(i => generated.get(i));
-        // TODO: support multiple correct
-        const correctIndex = randomSubset(R.range(0, numChoices), NUM_ORIG_PER_Q)[0];
+    const singleParts = List.of('Soprano', 'Alto', 'Tenor', 'Bass')
+    const p1 = singleParts.get(randInt(singleParts.size))
+    const p2 = singleParts.get(randInt(singleParts.size))
 
-        return {
-            experimentId,
-            choices: Immutable.Range(0, numChoices).map((i) => {
-                if (i === correctIndex) return correctChoices.pop();
-                else return incorrectChoices.pop();
-            }).toList(),
-            correctIndex,
-        };
+    return fromJS(
+        List.of(p1, p2, 'Alto-Tenor', 'Alto-Tenor-Bass', 'AllParts').map(mask => {
+            const questions = questionGroups.get(mask)
+            const q = questions.get(randInt(questions.size))
+
+            const correctIndex = randInt(2)
+            return {
+                experimentId,
+                choices: Immutable.Range(0, 2).map((i) => {
+                    if (i === correctIndex) return fromJS({
+                        name: q.get('original').split('/').pop(),
+                        url: q.get('original'),
+                    })
+                    else return fromJS({
+                        name: q.get('generated').split('/').pop(),
+                        url: q.get('generated'),
+                    })
+                }).toList(),
+                correctIndex,
+            };
     }).toList());
 }
  export const setExperiment = (experimentData, state) => R.compose(

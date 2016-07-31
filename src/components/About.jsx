@@ -64,18 +64,6 @@ export default class About extends Component {
                   <div className="description">Cambridge University Engineering Department</div>
                 </div>
               </div>
-              <div className="item">
-                <div className="content">
-                  <div className="header">Matthew Joseph</div>
-                  <div className="description">Microsoft Research Cambridge</div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="content">
-                  <div className="header">Mark Gotham</div>
-                  <div className="description">Faculty of Music, University of Cambridge</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

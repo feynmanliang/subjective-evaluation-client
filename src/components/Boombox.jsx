@@ -29,6 +29,7 @@ export class Boombox extends Component {
     };
     // TODO: manage boombox in redux state
     this.props.boombox.load(this.props.name, options);
+    this.props.boombox.volume(1.0);
   }
 
   stopOtherSounds() {

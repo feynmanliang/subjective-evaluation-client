@@ -14,8 +14,8 @@ const validate = values => {
     errors.age = 'Required'
   } else if (isNaN(Number(values.get('age')))) {
     errors.age = 'Must be a number'
-  } else if (values.get('age') < 0) {
-    errors.age = 'Must be >= 0'
+  } else if (values.get('age') < 8 || values.get('age') > 85) {
+    errors.age ='Please enter your real age :)'
   }
 
   if (!values.get('yearsMusicExperience')) {
