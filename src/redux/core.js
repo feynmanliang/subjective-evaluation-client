@@ -27,29 +27,32 @@ function generateQuestions(experimentData) {
 
     const singleParts = List.of('Soprano', 'Alto', 'Tenor', 'Bass')
     const p1 = singleParts.get(randInt(singleParts.size))
-    const p2 = singleParts.get(randInt(singleParts.size))
 
     return fromJS(
-        List.of(p1, p2, 'Alto-Tenor', 'Alto-Tenor-Bass', 'AllParts').map(mask => {
-            const questions = questionGroups.get(mask)
-            const q = questions.get(randInt(questions.size))
+        List.of(p1, 'Alto-Tenor', 'Alto-Tenor-Bass', 'AllParts', 'AllParts')
+            .sortBy(() => Math.random())
+            .map(mask => {
+                const questions = questionGroups.get(mask)
+                const q = questions.get(randInt(questions.size))
 
-            const correctIndex = randInt(2)
-            return {
-                experimentId,
-                choices: Immutable.Range(0, 2).map((i) => {
-                    if (i === correctIndex) return fromJS({
-                        name: q.get('original').split('/').pop(),
-                        url: q.get('original'),
-                    })
-                    else return fromJS({
-                        name: q.get('generated').split('/').pop(),
-                        url: q.get('generated'),
-                    })
-                }).toList(),
-                correctIndex,
-            };
-    }).toList());
+                const correctIndex = randInt(2)
+                return {
+                    experimentId,
+                    choices: Immutable.Range(0, 2).map((i) => {
+                        if (i === correctIndex) return fromJS({
+                            name: q.get('original').split('/').pop(),
+                            url: q.get('original'),
+                        })
+                        else return fromJS({
+                            name: q.get('generated').split('/').pop(),
+                            url: q.get('generated'),
+                        })
+                    }).toList(),
+                    correctIndex,
+                };
+            })
+            .toList()
+    );
 }
  export const setExperiment = (experimentData, state) => R.compose(
      setQuestions(generateQuestions(experimentData)),
