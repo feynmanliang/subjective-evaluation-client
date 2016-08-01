@@ -76,8 +76,8 @@ export default class MainLayout extends Component {
               <div className="nine wide column">
                 <h4 className="ui inverted header">Data Policy</h4>
                 <p>
-                  We collect anonymized data in order to improve the system.
-                  Your data is never sold, shared, or used for commercial purposes.
+                  We collect anonymized data for research purposes only.
+                  Your data is never sold, shared, or used for commercial or marketing purposes.
                 </p>
               </div>
             </div>
