@@ -7,28 +7,6 @@ import * as actionCreators from '../redux/action_creators';
 
 const { func } = PropTypes;
 
-const validate = values => {
-  const errors = {}
-
-  if (!values.get('age')) {
-    errors.age = 'Required'
-  } else if (isNaN(Number(values.get('age')))) {
-    errors.age = 'Must be a number'
-  } else if (values.get('age') < 8 || values.get('age') > 85) {
-    errors.age ='Please enter your real age :)'
-  }
-
-  if (!values.get('yearsMusicExperience')) {
-    errors.yearsMusicExperience = 'Required'
-  } else if (isNaN(Number(values.get('yearsMusicExperience')))) {
-    errors.yearsMusicExperience = 'Must be a number'
-  } else if (values.get('yearsMusicExperience') < 0) {
-    errors.age = 'Must be >= 0'
-  }
-
-  return errors
-}
-
 const UserInfoForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,29 +22,65 @@ const UserInfoForm = (props) => {
         <div className="ui divider"></div>
 
         <form onSubmit={handleSubmit} className="ui form">
-          <div className="field">
-            <label>Age</label>
-            <Field name="age" component={age =>
-              <div>
-                <input type="number" {...age} placeholder="Age"/>
-                {age.touched && age.error &&
-                  <div className="ui error message" style={{ display: 'block' }}>
-                    {age.error}
-                  </div>}
+          <div className="inline fields">
+            <label for="ageGroup">Age Group</label>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="ageGroup" component="input" type="radio" value="under18" />
+                <label>Under 18</label>
               </div>
-            }/>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="ageGroup" component="input" type="radio" value="18to25" />
+                <label>18 to 25</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="ageGroup" component="input" type="radio" value="26to45" />
+                <label>26 to 45</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="ageGroup" component="input" type="radio" value="46to60" />
+                <label>46 to 60</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="ageGroup" component="input" type="radio" value="over60" />
+                <label>Over 60</label>
+              </div>
+            </div>
           </div>
-          <div className="field">
-            <label>Years of Professional Music Experience</label>
-            <Field name="yearsMusicExperience" component={yearsMusicExperience =>
-              <div>
-                <input type="number" {...yearsMusicExperience} placeholder="Years of Professional Music Experience" />
-                {yearsMusicExperience.touched && yearsMusicExperience.error &&
-                  <div className="ui error message" style={{ display: 'block' }}>
-                    {yearsMusicExperience.error}
-                  </div>}
+          <div className="grouped fields">
+            <label for="musicExperience">Self-rating of music experience</label>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="musicExperience" component="input" type="radio" value="novice" />
+                <label><b>Novice</b>: I like to listen to music, but do not play any instruments</label>
               </div>
-            }/>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="musicExperience" component="input" type="radio" value="intermediate" />
+                <label><b>Intermediate</b>: I have played an instrument, but have not studied music composition</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <Field name="musicExperience" component="input" type="radio" value="advanced" />
+                <label><b>Advanced</b>: I have studied music composition in a formal setting</label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+              <Field name="musicExperience" component="input" type="radio" value="expert" />
+                <label><b>Expert</b>: I am a teacher or researcher in music</label>
+              </div>
+            </div>
           </div>
           <div>
             <button className="ui button primary" type="submit" disabled={submitting}>Submit</button>
@@ -84,11 +98,10 @@ const selector = formValueSelector('userInfoForm');
 export default {
   form: connect(
     state => ({
-      userInfo: selector(state, 'age', 'yearsMusicExperience')
+      userInfo: selector(state, 'ageGroup', 'musicExperience')
     }),
     actionCreators
   )(reduxForm({
-    form: 'userInfoForm',
-    validate
+    form: 'userInfoForm'
   })(UserInfoForm))
 };
