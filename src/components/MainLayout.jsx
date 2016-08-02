@@ -55,6 +55,12 @@ export default class MainLayout extends Component {
                 {this.navMenu()}
                 <div className="right menu inverted">
                   <div className="item">
+                    <iframe width="59" height="20" scrolling="no" frameBorder="0" allowTransparency="true"
+                        src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbachbot.com&layout=button&size=small&mobile_iframe=true&width=59&height=20&appId"
+                        style={{
+                          border: 'none',
+                          overflow: 'hidden'
+                        }}></iframe>
                     <iframe id="twitter-widget-0" scrolling="no" frameBorder="0" allowTransparency="true"
                         className="twitter-share-button twitter-share-button-rendered twitter-tweet-button"
                         title="Twitter Tweet Button"
@@ -68,7 +74,7 @@ export default class MainLayout extends Component {
                         data-url="http://bachbot.com"></iframe>
                     <iframe className="github"
                         src="http://ghbtns.com/github-btn.html?user=feynmanliang&amp;repo=bachbot&amp;type=watch&amp;count=true"
-                        allowtransparency="true" frameBorder="0" scrolling="0" width="100" height="20"></iframe>
+                        allowTransparency="true" frameBorder="0" scrolling="0" width="100" height="20"></iframe>
                   </div>
                 </div>
               </div>
