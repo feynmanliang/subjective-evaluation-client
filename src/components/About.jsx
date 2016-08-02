@@ -49,7 +49,7 @@ export default class About extends Component {
 
             <iframe scrolling="no"
                   src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/246633991&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"
-                  width="100%" height="450" scrolling="no" frameborder="no" frameBorder="0">
+                  width="100%" height="450" scrolling="no" frameBorder="0">
                 This was supposed to display an embedded <a href="https://soundcloud.com/deepjazz-ai/sets">SoundCloud</a> app.
 
                 Your browser does not support iframes and/or SoundCloud is blocked by your internet provider.

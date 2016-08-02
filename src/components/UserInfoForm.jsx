@@ -7,13 +7,25 @@ import * as actionCreators from '../redux/action_creators';
 
 const { func } = PropTypes;
 
+const validate = values => {
+  const errors = {}
+  if (!values.get('ageGroup')) {
+    errors.ageGroup = 'Required'
+  }
+  if (!values.get('musicExperience')) {
+    errors.musicExperience = 'Required'
+  }
+  return errors
+}
+
 const UserInfoForm = (props) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const submitFormAndAdvance = (e) => {
     props.submitUserInfo(props.userInfo);
     props.next();
   }
-  const { pristine, reset, submitting } = props;
+  const { userInfo, pristine, reset, submitting, submitFailed, handleSubmit } = props;
+  const { ageGroup, musicExperience } = userInfo;
+
   return (
     <div className="ui vertical stripe segment">
       <div className="ui text container">
@@ -21,7 +33,7 @@ const UserInfoForm = (props) => {
 
         <div className="ui divider"></div>
 
-        <form onSubmit={handleSubmit} className="ui form">
+        <form onSubmit={handleSubmit(submitFormAndAdvance)} className="ui form">
           <div className="inline fields">
             <label htmlFor="ageGroup">Age Group</label>
             <div className="field">
@@ -54,6 +66,12 @@ const UserInfoForm = (props) => {
                 <label>Over 60</label>
               </div>
             </div>
+            {submitFailed && !ageGroup &&
+              <div className="ui negative message">
+                <div className="header">
+                  Required!
+                </div>
+              </div>}
           </div>
           <div className="grouped fields">
             <label htmlFor="musicExperience">Self-rating of music experience</label>
@@ -81,6 +99,12 @@ const UserInfoForm = (props) => {
                 <label><b>Expert</b>: I am a teacher or researcher in music</label>
               </div>
             </div>
+            {submitFailed && !musicExperience &&
+              <div className="ui negative message">
+                <div className="header">
+                  Required!
+                </div>
+              </div>}
           </div>
           <div>
             <button className="ui button primary" type="submit" disabled={submitting}>Submit</button>
@@ -102,6 +126,7 @@ export default {
     }),
     actionCreators
   )(reduxForm({
-    form: 'userInfoForm'
+    form: 'userInfoForm',
+    validate
   })(UserInfoForm))
 };
