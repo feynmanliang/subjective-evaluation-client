@@ -23,7 +23,7 @@ const UserInfoForm = (props) => {
 
         <form onSubmit={handleSubmit} className="ui form">
           <div className="inline fields">
-            <label for="ageGroup">Age Group</label>
+            <label htmlFor="ageGroup">Age Group</label>
             <div className="field">
               <div className="ui radio checkbox">
                 <Field name="ageGroup" component="input" type="radio" value="under18" />
@@ -56,7 +56,7 @@ const UserInfoForm = (props) => {
             </div>
           </div>
           <div className="grouped fields">
-            <label for="musicExperience">Self-rating of music experience</label>
+            <label htmlFor="musicExperience">Self-rating of music experience</label>
             <div className="field">
               <div className="ui radio checkbox">
                 <Field name="musicExperience" component="input" type="radio" value="novice" />

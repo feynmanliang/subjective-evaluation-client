@@ -36,6 +36,13 @@ export class Quiz extends Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
+  componentDidMount() {
+    $(this.refs.progressBar).progress({
+      value: this.props.questionNumber,
+      total: this.props.totalNumberQuestions
+    })
+  }
+
   isChoiceSelected(index) {
     return this.props.response && (this.props.response.get('choiceIndex') === index);
   }
@@ -62,6 +69,7 @@ export class Quiz extends Component {
   }
 
   onClickNext() {
+    $(this.refs.progressBar).progress('increment');
     this.props.boombox.pause();
     this.props.next();
   }
@@ -70,9 +78,11 @@ export class Quiz extends Component {
     return <div className="ui vertical stripe segment">
       <div className="ui text container">
 
-        <h3 className="ui header">The BachBot Challenge</h3>
+        <h2 className="ui header">The BachBot Challenge</h2>
 
         <div className="ui divider"></div>
+
+        If music does not play, wait for a few seconds and try playing again.
 
         <table className="ui compact celled unstackable table" style={{ margin: '2em 0em' }}>
           <thead>
@@ -90,7 +100,6 @@ export class Quiz extends Component {
             <tr>
               <th></th>
               <th>
-                Question {this.props.questionNumber} out of {this.props.totalNumberQuestions}
                 <button className="ui right floated small primary button"
                         onClick={::this.onClickNext}
                         disabled={!this.props.response}>
@@ -100,6 +109,12 @@ export class Quiz extends Component {
             </tr>
           </tfoot>
         </table>
+        <div className="ui indicating progress" ref="progressBar">
+          <div className="bar">
+            <div className="progress"></div>
+          </div>
+          <div className="label">Question {this.props.questionNumber} out of {this.props.totalNumberQuestions}</div>
+        </div>
       </div>
     </div>;
   }
