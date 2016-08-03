@@ -26,6 +26,7 @@ export class Quiz extends Component {
     }),
     questionNumber: number.isRequired,
     totalNumberQuestions: number.isRequired,
+    loaded: listOf(string.isRequired),
     updateChoice: func.isRequired,
     next: func.isRequired,
   };
@@ -61,7 +62,8 @@ export class Quiz extends Component {
           <td>
             <PlayRestartPlayerContainer
               name={choice.get('name')}
-              mp3Path={choice.get('url')} />
+              mp3Path={choice.get('url')}
+              isLoaded={this.props.loaded.includes(choice.get('name'))} />
           </td>
         </tr>
     );
@@ -72,15 +74,26 @@ export class Quiz extends Component {
     this.props.next();
   }
 
+  renderLoading() {
+    return (
+      <div className="ui active dimmer">
+        <div className="ui text loader">If this appears to be stuck, try pressing the browser's back button followed
+        by the forwards button.</div>
+      </div>);
+  }
+
   render() {
+    const allLoaded = this.props.question.get('choices')
+      .every((choice) => this.props.loaded.includes(choice.get('name')))
+    const loader = !allLoaded ? this.renderLoading() : undefined
+
     return <div className="ui vertical stripe segment">
       <div className="ui text container">
 
+        {loader}
+
         <h2 className="ui header">The BachBot Challenge</h2>
-
         <div className="ui divider"></div>
-
-        If you do not hear any audio after pressing the play button, please wait for a few seconds and try again.
 
         <table className="ui compact celled unstackable table" style={{ margin: '2em 0em' }}>
           <thead>
@@ -124,6 +137,7 @@ export const QuizContainer = connect(
     response: state.getIn(['main', 'active', 'response']),
     questionNumber: state.getIn(['main', 'responses']).size + 1,
     totalNumberQuestions: state.getIn(['main', 'questions']).size + state.getIn(['main', 'responses']).size + 1,
+    loaded: state.getIn(['main', 'active', 'loaded']),
   }),
   actionCreators
 )(Quiz);

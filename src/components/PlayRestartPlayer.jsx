@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import * as actionCreators from '../redux/action_creators';
 
-const { contains, listOf } = ImmutablePropTypes;
-const { object, string, func } = PropTypes;
+const { listOf } = ImmutablePropTypes;
+const { object, string, bool, func } = PropTypes;
 
 export class PlayRestartPlayer extends Component {
   static propTypes = {
@@ -14,7 +14,6 @@ export class PlayRestartPlayer extends Component {
     mp3Path: string.isRequired,
     // injected by connect()
     nowPlaying: string,
-    loaded: listOf(string.isRequired),
     onLoaded: func.isRequired,
     playResumeSound: func.isRequired,
     pauseSound: func.isRequired,
@@ -30,10 +29,6 @@ export class PlayRestartPlayer extends Component {
         }
       ]
     };
-  }
-
-  isLoaded() {
-    return this.props.loaded.includes(this.props.name);
   }
 
   isPlaying() {
@@ -68,20 +63,13 @@ export class PlayRestartPlayer extends Component {
   }
 
   renderControls() {
-    if (!::this.isLoaded()) {
-      return (
-        <div className="ui active dimmer">
-          <div className="ui text loader"></div>
-        </div>);
-    } else {
-      return (
-        <div className="ui icon buttons">
-          {::this.renderPlayPauseButton()}
-          <button className="ui button" onClick={::this.onReplayClick}>
-            <i ref="replay" className="fast backward icon"></i>
-          </button>
-        </div>);
-    }
+    return (
+      <div className="ui icon buttons">
+        {::this.renderPlayPauseButton()}
+        <button className="ui button" onClick={::this.onReplayClick}>
+          <i ref="replay" className="fast backward icon"></i>
+        </button>
+      </div>);
   }
 
   renderNowPlayingIcon() {
@@ -103,9 +91,9 @@ export class PlayRestartPlayer extends Component {
       <div>
         <Audio
           src={this.props.mp3Path}
-          playing={this.isPlaying()}
+          playing={::this.isPlaying()}
           onLoad={() => this.props.onLoaded(this.props.name)}
-          onLoadError={() => alert('Sorry, there was an error loading the samples.')}
+          onLoadError={() => alert('Sorry, there was an error loading the sample: ' + this.props.name)}
           ref={(ref) => this.audio = ref} />
         {::this.renderControls()}
         {::this.renderNowPlayingIcon()}
@@ -116,7 +104,6 @@ export class PlayRestartPlayer extends Component {
 export const PlayRestartPlayerContainer = connect(
   (state) => ({
     nowPlaying: state.getIn(['main', 'active', 'nowPlaying']),
-    loaded: state.getIn(['main', 'active', 'loaded']),
   }),
   actionCreators
 )(PlayRestartPlayer)
