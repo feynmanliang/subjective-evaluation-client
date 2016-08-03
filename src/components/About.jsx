@@ -88,6 +88,18 @@ export default class About extends Component {
                   <div className="description">Cambridge University Engineering Department</div>
                 </div>
               </div>
+              <div className="item">
+                <div className="content">
+                  <div className="header"><a href="https://www.microsoft.com/en-us/research/people/matjoh/">Matthew Johnson</a></div>
+                  <div className="description">Microsoft Research Cambridge</div>
+                </div>
+              </div>
+              <div className="item">
+                <div className="content">
+                  <div className="header"><a href="https://www.microsoft.com/en-us/research/people/jamiesho/">Jamie Shotton</a></div>
+                  <div className="description">Microsoft Research Cambridge</div>
+                </div>
+              </div>
             </div>
 
             <div className="ui header divider"></div>
