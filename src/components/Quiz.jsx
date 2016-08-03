@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-import ReactHowler from 'react-howler'
 
 import { PlayRestartPlayerContainer } from './PlayRestartPlayer';
 
