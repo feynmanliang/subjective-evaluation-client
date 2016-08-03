@@ -14,6 +14,13 @@ export function updateChoice(response) {
   };
 }
 
+export function onLoaded(name) {
+  return {
+    type: 'ON_LOADED',
+    name
+  };
+}
+
 export function next() {
   return {
     type: 'NEXT'

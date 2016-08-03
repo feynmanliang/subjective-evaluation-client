@@ -74,6 +74,7 @@ export const next = (state) => {
     return state.merge({
         active: questions.size > 0 ? {
             question: questions.first(),
+            loaded: List(),
             metrics: fromJS({
                 startTimeMillis: Date.now(),
                 numPlayResumes: Map(),
@@ -90,6 +91,9 @@ export const next = (state) => {
         ) : responses
     });
 }
+
+export const onLoaded = R.curry((name, active) =>
+    active.update('loaded', loaded => loaded.push(name)));
 
 export const updateChoice = R.curry((response, active) =>
     active.merge({
@@ -115,7 +119,7 @@ export const replaySound = R.curry((name, active) =>
 
 export const submitResponses = (state) => {
     $.ajax({
-       // url: 'http://localhost:3000/submitResponse',
+        //url: 'http://localhost:3000/submitResponse',
         url: 'http://bachbot-server.azurewebsites.net/submitResponse',
         type: 'POST',
         data: {

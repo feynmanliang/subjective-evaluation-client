@@ -2,7 +2,6 @@ import R from 'ramda';
 import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { connect } from 'react-redux';
-import boombox from 'boombox-js';
 
 import * as actionCreators from '../redux/action_creators';
 
@@ -22,27 +21,6 @@ export class Challenge extends Component {
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-
-    this.boombox = boombox;
-    this.boombox.setup({
-      webaudio: {
-        //use: false // force override
-      },
-      htmlaudio: {
-        //use: true // force override
-      },
-      htmlvideo: {
-        //use: true // force override
-      }
-    });
-  }
-
-  componentWillUpdate(nextProps) {
-    if (!nextProps.hasActiveQuestion) {
-      this.boombox.power(this.boombox.POWER_OFF);
-    } else {
-      this.boombox.power(this.boombox.POWER_ON);
-    }
   }
 
   render() {
@@ -50,9 +28,9 @@ export class Challenge extends Component {
       return <UserInfoForm.form />;
     } else {
       if (this.props.hasActiveQuestion) {
-        return <QuizContainer boombox={this.boombox} />;
+        return <QuizContainer />;
       } else {
-        return <ResultsContainer boombox={this.boombox} />;
+        return <ResultsContainer />;
       };
     }
   }

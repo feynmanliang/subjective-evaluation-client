@@ -5,6 +5,7 @@ import {
     setExperiment,
     setExperimentId,
     setQuestions,
+    onLoaded,
     next,
     updateChoice,
     playResumeSound,
@@ -27,6 +28,8 @@ export default {
             case 'NEXT':
                 return next(state);
             // TODO: DRY this up with a sub-reducer
+            case 'ON_LOADED':
+                return state.update('active', active => onLoaded(fromJS(action.name), active));
             case 'UPDATE_CHOICE':
                 return state.update('active', active => updateChoice(fromJS(action.response), active));
             case 'PLAY_RESUME_SOUND':

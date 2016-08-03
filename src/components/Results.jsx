@@ -3,8 +3,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
-import { BoomboxContainer } from './Boombox';
-
 import * as actionCreators from '../redux/action_creators';
 
 const { contains, listOf } = ImmutablePropTypes
@@ -12,7 +10,6 @@ const { number, string, bool, func, object } = PropTypes;
 
 export class Results extends Component {
   static propTypes = {
-    boombox: object.isRequired,
     responses: listOf(
       contains({
         choices: listOf(contains({
@@ -47,7 +44,7 @@ export class Results extends Component {
   }
 
   render() {
-    const { responses, boombox } = this.props;
+    const { responses } = this.props;
     return <div className="ui vertical stripe segment">
       <div className="ui text container">
 
@@ -61,7 +58,6 @@ export class Results extends Component {
   }
 }
 
-// TODO: more detailed responses; need to refactor boombox
 class ResponseItem extends Component {
   static propTypes = {
     choices: listOf(contains({
@@ -70,7 +66,6 @@ class ResponseItem extends Component {
     })).isRequired,
     correctIndex: number.isRequired,
     choiceIndex: number.isRequired,
-    boombox: object.isRequired
   };
 
   constructor(props) {
@@ -79,15 +74,12 @@ class ResponseItem extends Component {
   }
 
   render() {
-    const { choices, correctIndex, choiceIndex, boombox } = this.props;
+    const { choices, correctIndex, choiceIndex } = this.props;
     const isCorrect = correctIndex === choiceIndex;
     const choice = this.props.choices.get(choiceIndex);
     return <div className={'ui message' + (isCorrect ? ' positive' : ' negative')}>
       <div className="header">
         {isCorrect ? 'Correct! This is a Bach original.' : 'Incorrect! This is computer generated.'}
-        <BoomboxContainer boombox={boombox}
-          name={choice.get('name')}
-          mp3Path={choice.get('url')} />
       </div>
     </div>;
   }

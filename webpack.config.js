@@ -19,12 +19,8 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      'boombox-js': path.join(__dirname, 'node_modules', 'boombox.js', 'boombox.js'),
       'react': path.join(__dirname, 'node_modules', 'react')
     },
-    amd: {
-      'boombox-js': true
-    }
   },
   output: {
     path: __dirname + '/dist',

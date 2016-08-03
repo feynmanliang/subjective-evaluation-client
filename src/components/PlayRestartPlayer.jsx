@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import Audio from 'react-howler';
 import { connect } from 'react-redux';
 
 import * as actionCreators from '../redux/action_creators';
 
+const { contains, listOf } = ImmutablePropTypes;
 const { object, string, func } = PropTypes;
 
 export class PlayRestartPlayer extends Component {
@@ -12,6 +14,8 @@ export class PlayRestartPlayer extends Component {
     mp3Path: string.isRequired,
     // injected by connect()
     nowPlaying: string,
+    loaded: listOf(string.isRequired),
+    onLoaded: func.isRequired,
     playResumeSound: func.isRequired,
     pauseSound: func.isRequired,
     replaySound: func.isRequired,
@@ -28,10 +32,8 @@ export class PlayRestartPlayer extends Component {
     };
   }
 
-  stopOtherSounds() {
-    Object.keys(this.props.boombox.pool)
-      .filter(k => k !== this.props.name)
-      .map(name => this.props.boombox.get(name).stop());
+  isLoaded() {
+    return this.props.loaded.includes(this.props.name);
   }
 
   isPlaying() {
@@ -53,8 +55,8 @@ export class PlayRestartPlayer extends Component {
     this.props.replaySound(this.props.name);
   }
 
-  playPauseButton() {
-    if (this.isPlaying()) {
+  renderPlayPauseButton() {
+    if (::this.isPlaying()) {
       return <button className="ui button" onClick={::this.onPauseClick}>
         <i className="pause icon"></i>
       </button>;
@@ -65,36 +67,56 @@ export class PlayRestartPlayer extends Component {
     }
   }
 
-  render() {
-    return (
-      <div>
+  renderControls() {
+    if (!::this.isLoaded()) {
+      return (
+        <div className="ui active dimmer">
+          <div className="ui text loader"></div>
+        </div>);
+    } else {
+      return (
         <div className="ui icon buttons">
-          <Audio
-            src={this.props.mp3Path}
-            playing={this.isPlaying()}
-            ref={(ref) => this.audio = ref} />
-          {::this.playPauseButton()}
+          {::this.renderPlayPauseButton()}
           <button className="ui button" onClick={::this.onReplayClick}>
             <i ref="replay" className="fast backward icon"></i>
           </button>
-        </div>
-        <span className="right">
-          {(() => {
-            if (this.isPlaying()) {
-              return <i className="volume up icon" style={{
-                verticalAlign: 'top',
-                fontSize: '1.5em'
-              }}></i>
-            }
-          })()}
-        </span>
-      </div>);
+        </div>);
+    }
+  }
+
+  renderNowPlayingIcon() {
+    return (
+      <span className="right">
+        {(() => {
+          if (::this.isPlaying()) {
+            return <i className="volume up icon" style={{
+              verticalAlign: 'top',
+              fontSize: '1.5em'
+            }}></i>
+          }
+        })()}
+      </span>);
+  }
+
+  render() {
+    return (
+      <div>
+        <Audio
+          src={this.props.mp3Path}
+          playing={this.isPlaying()}
+          onLoad={() => this.props.onLoaded(this.props.name)}
+          onLoadError={() => alert('Sorry, there was an error loading the samples.')}
+          ref={(ref) => this.audio = ref} />
+        {::this.renderControls()}
+        {::this.renderNowPlayingIcon()}
+    </div>);
   }
 }
 
 export const PlayRestartPlayerContainer = connect(
   (state) => ({
-    nowPlaying: state.getIn(['main', 'active', 'nowPlaying'])
+    nowPlaying: state.getIn(['main', 'active', 'nowPlaying']),
+    loaded: state.getIn(['main', 'active', 'loaded']),
   }),
   actionCreators
 )(PlayRestartPlayer)
