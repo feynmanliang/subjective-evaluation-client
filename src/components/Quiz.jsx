@@ -76,8 +76,7 @@ export class Quiz extends Component {
   renderLoading() {
     return (
       <div className="ui active dimmer">
-        <div className="ui text loader">If this appears to be stuck, try pressing the browser's back button followed
-        by the forwards button.</div>
+        <div className="ui text loader">Loading question...</div>
       </div>);
   }
 
@@ -85,11 +84,10 @@ export class Quiz extends Component {
     const allLoaded = this.props.question.get('choices')
       .every((choice) => this.props.loaded.includes(choice.get('name')))
     const loader = !allLoaded ? this.renderLoading() : undefined
+    // TODO: render loader
 
     return <div className="ui vertical stripe segment">
       <div className="ui text container">
-
-        {loader}
 
         <h2 className="ui header">The BachBot Challenge</h2>
         <div className="ui divider"></div>

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import Audio from 'react-howler';
+import Audio from 'react-player';
 import { connect } from 'react-redux';
 
 import * as actionCreators from '../redux/action_creators';
@@ -33,9 +33,7 @@ export class PlayRestartPlayer extends Component {
   }
 
   onReplayClick() {
-    if (::this.isPlaying()) {
-      this.audio.seek(1e-12)
-    }
+    this.audio.seekTo(0);
     this.props.replaySound(this.props.name);
   }
 
@@ -79,11 +77,13 @@ export class PlayRestartPlayer extends Component {
     return (
       <div>
         <Audio
-          src={this.props.mp3Path}
+          url={this.props.mp3Path}
           playing={::this.isPlaying()}
-          onLoad={() => this.props.onLoaded(this.props.name)}
-          onLoadError={() => alert('Sorry, there was an error loading the sample: ' + this.props.name)}
-          ref={(ref) => this.audio = ref} />
+          onError={(err) => alert('Sorry, your browser couldn\'t load the audio file: ' + this.props.name)}
+          width="0"
+          height="0"
+          ref={(ref) => this.audio = ref}
+        />
         {::this.renderControls()}
         {::this.renderNowPlayingIcon()}
     </div>);
