@@ -20,17 +20,6 @@ export class PlayRestartPlayer extends Component {
     replaySound: func.isRequired,
   };
 
-  componentWillMount() {
-    const options = {
-      src: [
-        {
-          media: 'audio/mp3',
-          path: this.props.mp3Path
-        }
-      ]
-    };
-  }
-
   isPlaying() {
     return this.props.nowPlaying === this.props.name;
   }
