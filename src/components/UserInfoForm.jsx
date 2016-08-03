@@ -1,6 +1,5 @@
 import R from 'ramda';
 import React, { Component, PropTypes } from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable';
 import { connect } from 'react-redux';
 import * as actionCreators from '../redux/action_creators';
