@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
+import ReactHowler from 'react-howler'
 
-import { BoomboxContainer } from './Boombox';
+import { PlayRestartPlayerContainer } from './PlayRestartPlayer';
 
 import * as actionCreators from '../redux/action_creators';
 
@@ -12,7 +13,6 @@ const { string, number, func, object } = PropTypes;
 
 export class Quiz extends Component {
   static propTypes = {
-    boombox: object.isRequired,
     question: contains({
       experimentId: string.isRequired,
       choices: listOf(contains({
@@ -59,7 +59,7 @@ export class Quiz extends Component {
             </div>
           </td>
           <td>
-            <BoomboxContainer boombox={this.props.boombox}
+            <PlayRestartPlayerContainer
               name={choice.get('name')}
               mp3Path={choice.get('url')} />
           </td>
@@ -69,7 +69,6 @@ export class Quiz extends Component {
 
   onClickNext() {
     $(this.refs.progressBar).progress('increment');
-    this.props.boombox.pause();
     this.props.next();
   }
 
@@ -81,7 +80,7 @@ export class Quiz extends Component {
 
         <div className="ui divider"></div>
 
-        If music does not play, wait for a few seconds and try playing again.
+        If you do not hear any audio after pressing the play button, please wait for a few seconds and try again.
 
         <table className="ui compact celled unstackable table" style={{ margin: '2em 0em' }}>
           <thead>
