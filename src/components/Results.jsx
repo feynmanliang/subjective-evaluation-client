@@ -53,6 +53,13 @@ export class Results extends Component {
         <div className="ui divider"></div>
 
         <p>You scored {this.percentCorrect()}%! Refresh to try again.</p>
+
+        <div className="ui divider"></div>
+
+        <p>Thank you for taking time to contribute to creative AI research!
+        Your participation generates valuable data which is used to evaluate
+        and improve BachBot.</p>
+
       </div>
     </div>;
   }
