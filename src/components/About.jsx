@@ -79,13 +79,19 @@ export default class About extends Component {
               <div className="item">
                 <div className="content">
                   <div className="header"><a href="http://github.com/feynmanliang">Feynman Liang</a></div>
-                  <div className="description">Cambridge University Engineering Department</div>
+                  <div className="description">Department of Engineering, University of Cambridge</div>
+                </div>
+              </div>
+              <div className="item">
+                <div className="content">
+                  <div className="header"><a href="http://mrhg2.user.srcf.net/index.html">Mark Gotham</a></div>
+                  <div className="description">Faculty of Music, University of Cambridge</div>
                 </div>
               </div>
               <div className="item">
                 <div className="content">
                   <div className="header">Marcin Tomczak</div>
-                  <div className="description">Cambridge University Engineering Department</div>
+                  <div className="description">Department of Engineering, University of Cambridge</div>
                 </div>
               </div>
               <div className="item">
