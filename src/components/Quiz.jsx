@@ -89,7 +89,7 @@ export class Quiz extends Component {
     return <div className="ui vertical stripe segment">
       <div className="ui text container">
 
-        <h2 className="ui header">The BachBot Challenge</h2>
+        <h1 className="ui header">The BachBot Challenge</h1>
         <div className="ui divider"></div>
 
         <table className="ui compact celled unstackable table" style={{ margin: '2em 0em' }}>

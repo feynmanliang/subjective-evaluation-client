@@ -28,7 +28,7 @@ const UserInfoForm = (props) => {
   return (
     <div className="ui vertical stripe segment">
       <div className="ui text container">
-        <h3 className="ui header">Some background info about you</h3>
+        <h1 className="ui header">Some background info about you</h1>
 
         <div className="ui divider"></div>
 

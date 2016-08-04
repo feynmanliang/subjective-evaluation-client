@@ -48,13 +48,11 @@ export class Results extends Component {
     return <div className="ui vertical stripe segment">
       <div className="ui text container">
 
-        <h3 className="ui header">Results</h3>
+        <h1 className="ui header">Results</h1>
 
         <div className="ui divider"></div>
 
         <p>You scored {this.percentCorrect()}%! Refresh to try again.</p>
-
-        <div className="ui divider"></div>
 
         <p>Thank you for taking time to contribute to creative AI research!
         Your participation generates valuable data which is used to evaluate
