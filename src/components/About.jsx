@@ -84,7 +84,7 @@ export default class About extends Component {
               </div>
               <div className="item">
                 <div className="content">
-                  <div className="header"><a href="http://mrhg2.user.srcf.net/index.html">Mark Gotham</a></div>
+                  <div className="header"><a href="http://cms.mus.cam.ac.uk/directory/mark-gotham">Mark Gotham</a></div>
                   <div className="description">Faculty of Music, University of Cambridge</div>
                 </div>
               </div>
