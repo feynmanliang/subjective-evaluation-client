@@ -78,7 +78,7 @@ export default class About extends Component {
             <div className="ui list">
               <div className="item">
                 <div className="content">
-                  <div className="header"><a href="http://github.com/feynmanliang">Feynman Liang</a></div>
+                  <div className="header"><a href="https://github.com/feynmanliang">Feynman Liang</a></div>
                   <div className="description">Department of Engineering, University of Cambridge</div>
                 </div>
               </div>
