@@ -2,8 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-
 import * as actionCreators from '../redux/action_creators';
+import {
+  ShareButtons,
+  generateShareIcon
+} from 'react-share'
+
+
 
 const { contains, listOf } = ImmutablePropTypes
 const { number, string, bool, func, object } = PropTypes;
@@ -44,22 +49,100 @@ export class Results extends Component {
   }
 
   render() {
-    const { responses } = this.props;
-    return <div className="ui vertical stripe segment">
-      <div className="ui text container">
+    const shareUrl='http://bachbot.com'
+    const mediaUrl='https://i1.sndcdn.com/avatars-000243636856-a097ow-t200x200.jpg'
+    const title='The BachBot Challenge: Man vs Machine'
+    const {
+      FacebookShareButton,
+      GooglePlusShareButton,
+      LinkedinShareButton,
+      TwitterShareButton,
+      PinterestShareButton,
+      VKShareButton,
+    } = ShareButtons;
+    const FacebookIcon = generateShareIcon('facebook');
+    const TwitterIcon = generateShareIcon('twitter');
+    const GooglePlusIcon = generateShareIcon('google');
+    const LinkedinIcon = generateShareIcon('linkedin');
+    const PinterestIcon = generateShareIcon('pinterest');
+    const VKIcon = generateShareIcon('vk')
 
-        <h1 className="ui header">Results</h1>
+    return (
+      <div className="ui vertical stripe segment">
+        <div className="ui text container">
 
-        <div className="ui divider"></div>
+          <h1 className="ui header">Results</h1>
 
-        <p>You scored {this.percentCorrect()}%! Refresh to try again.</p>
+          <p>You scored {this.percentCorrect()}%! Refresh to try again.</p>
 
-        <p>Thank you for taking time to contribute to creative AI research!
-        Your participation generates valuable data which is used to evaluate
-        and improve BachBot.</p>
+          <div className="ui divider"></div>
 
+          <h2 className="ui header">Thank you!</h2>
+
+          <p>
+          Thank you for taking time to contribute to creative AI research!
+          Your participation generates valuable data which is used to evaluate
+          and improve BachBot.
+          </p>
+
+          <p>
+          Did you enjoy BachBot? If so, please consider sharing this project
+          with your friends!
+          </p>
+          <div className="ui container">
+              <FacebookShareButton
+                style={{float: 'left'}}
+                url={shareUrl}
+                title={title}>
+                <FacebookIcon
+                  size={32}
+                  round />
+              </FacebookShareButton>
+
+              <TwitterShareButton
+                style={{float: 'left'}}
+                url={shareUrl}
+                title={title}>
+                <TwitterIcon
+                  size={32}
+                  round />
+              </TwitterShareButton>
+
+              <GooglePlusShareButton
+                style={{float: 'left'}}
+                url={shareUrl}>
+                <GooglePlusIcon
+                  size={32}
+                  round />
+              </GooglePlusShareButton>
+
+              <LinkedinShareButton
+                style={{float: 'left'}}
+                url={shareUrl}
+                title={title}>
+                <LinkedinIcon
+                  size={32}
+                  round />
+              </LinkedinShareButton>
+
+              <PinterestShareButton
+                style={{float: 'left'}}
+                url={shareUrl}
+                media={mediaUrl}>
+                <PinterestIcon size={32} round />
+              </PinterestShareButton>
+
+              <VKShareButton
+                style={{float: 'left'}}
+                url={shareUrl}>
+                <VKIcon
+                  size={32}
+                  round />
+              </VKShareButton>
+          </div>
+        </div>
       </div>
-    </div>;
+    );
   }
 }
 
