@@ -1,5 +1,3 @@
-import R from 'ramda';
-
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router'
 

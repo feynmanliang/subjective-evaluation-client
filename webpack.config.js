@@ -10,11 +10,23 @@ module.exports = {
     './src/index.jsx'
   ],
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      include: path.join(__dirname, 'src'),
-      loaders: ['react-hot', 'babel-loader'],
-    }]
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        include: path.join(__dirname, 'src'),
+        loaders: ['react-hot', 'babel-loader'],
+      },
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      {
+        test: /\.js$/,
+        include: /semantic/,
+        loaders: ['imports-loader?this=>window']
+      },
+      {
+        test: /\.(png|jpg|jpeg|svg|woff|woff2|ttf|eot)$/i,
+        loaders: ['file-loader']
+      }
+    ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -32,6 +44,10 @@ module.exports = {
     hot: true
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development')

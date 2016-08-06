@@ -3,3 +3,5 @@ dist/bundle.js*
 *.log
 .env
 dist/*.mp3
+semantic/dist/
+semantic/tasks/
