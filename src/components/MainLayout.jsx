@@ -93,7 +93,7 @@ export default class MainLayout extends Component {
         <iframe id="twitter-widget-0" scrolling="no" frameBorder="0" allowTransparency="true"
             className="twitter-share-button twitter-share-button-rendered twitter-tweet-button"
             title="Twitter Tweet Button"
-            src="https://platform.twitter.com/widgets/tweet_button.a9003d9964444592507bbb36b98c709b.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Fbachbot.com%2F&amp;size=m&amp;text=Can%20you%20tell%20Bach%20apart%20from%20a%20computer%3F%20Take%20the%20BachBot%20challenge%20now!&amp;type=share&amp;url=http%3A%2F%2Fbachbot.com&amp"
+            src="https://platform.twitter.com/widgets/tweet_button.a9003d9964444592507bbb36b98c709b.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Fbachbot.com%2F&amp;size=m&amp;text=Can%20you%20tell%20%23Bach%27s%20%23music%20apart%20from%20an%20%23AI%3F%20Take%20the%20%23BachBot%20challenge%20now!&amp;type=share&amp;url=http%3A%2F%2Fbachbot.com&amp"
             style={{
               position: 'static',
               visibility: 'visible',
@@ -168,13 +168,11 @@ export default class MainLayout extends Component {
                 </div>
                 <div className="ui inverted section divider"></div>
                 <p className="ui inverted small segment item">
-                  This work was completed as part of a thesis project for Cambridge University's
-                  <ReactGA.OutboundLink
+                  This work was completed as part of a thesis project for Cambridge University's <ReactGA.OutboundLink
                     className="header"
                     eventLabel="http://www.mlsalt.eng.cam.ac.uk/"
                     to="http://www.mlsalt.eng.cam.ac.uk/"
-                    target="_blank">
-                    MPhil in Machine Learning, Speech, and Language Technology
+                    target="_blank"> MPhil in Machine Learning, Speech, and Language Technology
                   </ReactGA.OutboundLink>.
                 </p>
               </div>
