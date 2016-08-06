@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router'
+import ReactGA from 'react-ga'
 
 export default class MainLayout extends Component {
   componentDidMount() {
@@ -167,7 +168,14 @@ export default class MainLayout extends Component {
                 </div>
                 <div className="ui inverted section divider"></div>
                 <p className="ui inverted small segment item">
-                  This work was completed as part of a thesis project for Cambridge University's <a href="http://www.mlsalt.eng.cam.ac.uk/">MPhil in Machine Learning, Speech, and Language Technology</a>.
+                  This work was completed as part of a thesis project for Cambridge University's
+                  <ReactGA.OutboundLink
+                    className="header"
+                    eventLabel="http://www.mlsalt.eng.cam.ac.uk/"
+                    to="http://www.mlsalt.eng.cam.ac.uk/"
+                    target="_blank">
+                    MPhil in Machine Learning, Speech, and Language Technology
+                  </ReactGA.OutboundLink>.
                 </p>
               </div>
             </div>

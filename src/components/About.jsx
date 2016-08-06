@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router'
+import ReactGA from 'react-ga'
 
 export default class About extends Component {
   constructor(props) {
@@ -85,13 +86,25 @@ export default class About extends Component {
             <div className="ui list">
               <div className="item">
                 <div className="content">
-                  <div className="header"><a href="https://github.com/feynmanliang">Feynman Liang</a></div>
+                  <ReactGA.OutboundLink
+                    className="header"
+                    eventLabel="https://github.com/feynmanliang"
+                    to="https://github.com/feynmanliang"
+                    target="_blank">
+                    Feynman Liang
+                  </ReactGA.OutboundLink>
                   <div className="description">Department of Engineering, University of Cambridge</div>
                 </div>
               </div>
               <div className="item">
                 <div className="content">
-                  <div className="header"><a href="http://cms.mus.cam.ac.uk/directory/mark-gotham">Mark Gotham</a></div>
+                  <ReactGA.OutboundLink
+                    className="header"
+                    eventLabel="http://cms.mus.cam.ac.uk/directory/mark-gotham"
+                    to="http://cms.mus.cam.ac.uk/directory/mark-gotham"
+                    target="_blank">
+                    Mark Gotham
+                  </ReactGA.OutboundLink>
                   <div className="description">Faculty of Music, University of Cambridge</div>
                 </div>
               </div>
@@ -103,13 +116,25 @@ export default class About extends Component {
               </div>
               <div className="item">
                 <div className="content">
-                  <div className="header"><a href="https://www.microsoft.com/en-us/research/people/matjoh/">Matthew Johnson</a></div>
+                  <ReactGA.OutboundLink
+                    className="header"
+                    eventLabel="https://www.microsoft.com/en-us/research/people/matjoh/"
+                    to="https://www.microsoft.com/en-us/research/people/matjoh/"
+                    target="_blank">
+                    Matthew Johnson
+                  </ReactGA.OutboundLink>
                   <div className="description">Microsoft Research Cambridge</div>
                 </div>
               </div>
               <div className="item">
                 <div className="content">
-                  <div className="header"><a href="https://www.microsoft.com/en-us/research/people/jamiesho/">Jamie Shotton</a></div>
+                  <ReactGA.OutboundLink
+                    className="header"
+                    eventLabel="https://www.microsoft.com/en-us/research/people/jamiesho/"
+                    to="https://www.microsoft.com/en-us/research/people/jamiesho/"
+                    target="_blank">
+                    Jamie Shotton
+                  </ReactGA.OutboundLink>
                   <div className="description">Microsoft Research Cambridge</div>
                 </div>
               </div>

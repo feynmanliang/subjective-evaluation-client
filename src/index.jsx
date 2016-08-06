@@ -6,6 +6,8 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from './redux/store';
 import { setExperiment } from './redux/action_creators';
+import ReactGA from 'react-ga'
+
 import '../semantic/dist/semantic.css';
 import '../semantic/dist/components/form';
 import '../semantic/dist/components/progress';
@@ -20,6 +22,14 @@ import MainLayout from './components/MainLayout';
 import About from './components/About';
 import { ChallengeContainer } from './components/Challenge';
 import UserInfoForm from './components/UserInfoForm';
+
+ReactGA.initialize('UA-26556828-2', {
+  debug: (process.env.NODE_ENV === 'development')
+});
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+}
 
 const experimentJsonUrl = (process.env.NODE_ENV !== 'production') ?
   'experiment.json' :
@@ -44,7 +54,7 @@ fetch(experimentJsonUrl)
 
     ReactDOM.render(
       <Provider store={store}>
-        <Router history={history}>
+        <Router history={history} onUpdate={logPageView}>
           <Route path="/" component={MainLayout}>
             <IndexRoute component={About} />
             <Route path="quiz" component={ChallengeContainer} />
@@ -53,4 +63,3 @@ fetch(experimentJsonUrl)
       </Provider>,
       document.getElementById('root'));
   });
-

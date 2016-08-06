@@ -52,6 +52,7 @@
     "react-addons-pure-render-mixin": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
+    "react-ga": "^2.1.1",
     "react-immutable-proptypes": "^1.7.1",
     "react-player": "^0.8.0",
     "react-redux": "^4.4.5",
