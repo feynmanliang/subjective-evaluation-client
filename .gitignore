@@ -5,3 +5,4 @@ dist/bundle.js*
 dist/*.mp3
 semantic/dist/
 semantic/tasks/
+dist/
