@@ -40,7 +40,7 @@ export default class MainLayout extends Component {
             context          : $('#app'),
             dimPage          : true,
             transition       : 'overlay',
-            mobileTransition : 'uncover'
+            mobileTransition : 'uncover',
         })
         .sidebar('attach events', '.launch.button, .view-ui, .launch.item');
 

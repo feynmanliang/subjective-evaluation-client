@@ -665,7 +665,7 @@
   }
 }
 
-@media only screen and (max-width : 650px) {
+@media only screen and (max-width : 600px) {
   #example.index .fixed.launch.button {
     display: none;
   }
@@ -673,7 +673,7 @@
     font-size: 32px;
   }
 }
-@media only screen and (min-width : 650px) {
+@media only screen and (min-width : 600px) {
   #example .theming .source.button {
     display: none;
   }
