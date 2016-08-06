@@ -684,6 +684,11 @@
   #example.index .fixed.launch.button {
     display: none;
   }
+
+  #example.index .view-ui {
+    display: none;
+    visibility: hidden !important;
+  }
 }
 
 
@@ -724,37 +729,5 @@
 @media only screen and (max-width : 1040px) {
   #example.index .following.bar .network.menu .view-ui {
     margin-right: 0.5em;
-  }
-}
-
-
-@media only screen and (max-width: 1300px) {
-  #example.index .advertisement {
-    position: absolute;
-    top: auto;
-    left: 50%;
-    bottom: 2rem;
-    margin-left: -175px;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -ms-transform: none;
-    transform: none;
-  }
-  #example.index .inverted.advertisement .carbonad-img {
-    margin-top: 0px;
-  }
-  #example.index #carbonads-container {
-    float: none;
-  }
-  #example.index .carbonad {
-    width: 340px;
-  }
-  #example.index .carbonad-text,
-  #example.index .carbonad-tag {
-    float: none;
-    display: block;
-    text-align: left;
-    margin-left: 160px;
-    width: 170px;
   }
 }
