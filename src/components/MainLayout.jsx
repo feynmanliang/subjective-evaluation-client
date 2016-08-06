@@ -37,7 +37,7 @@ export default class MainLayout extends Component {
       // main sidebar
       $menu
         .sidebar({
-            context          : $('#app'),
+            context          : $('#content'),
             dimPage          : true,
             transition       : 'overlay',
             mobileTransition : 'uncover',
@@ -113,14 +113,16 @@ export default class MainLayout extends Component {
     return (
       <div id="app" className="app">
 
-        <div className="ui vertical inverted sidebar menu left" id="toc">
-          {this.navMenu()}
-          {this.socialButtons()}
-        </div>
-
-        <div className="ui black big launch right attached fixed button">
-          <i className="content icon"></i>
-          <span className="text">Menu</span>
+        <div className="following bar">
+          <div className="ui container">
+            <div className="ui large secondary network inverted menu">
+              <a className="view-ui item">
+                <i className="sidebar icon"></i>
+              </a>
+              {this.navMenu()}
+              {this.socialButtons()}
+            </div>
+          </div>
         </div>
 
         <div className="ui fixed inverted main menu">
@@ -128,49 +130,48 @@ export default class MainLayout extends Component {
             <a className="launch icon item">
               <i className="content icon"></i>
             </a>
-
             <div className="right menu">
-
               <div className="vertically fitted borderless item">
                 <iframe className="github"
                     src="https://ghbtns.com/github-btn.html?user=feynmanliang&amp;repo=bachbot&amp;type=watch&amp;count=true"
                     allowTransparency="true" frameBorder="0" scrolling="0" width="100" height="20"></iframe>
               </div>
-
             </div>
           </div>
         </div>
 
-        <div className="pusher">
+        <div id="content">
 
-          <div className="full height">
-            <div className="following bar">
-              <div className="ui container">
-                <div className="ui large secondary network inverted menu">
-                  <a className="view-ui item">
-                    <i className="sidebar icon"></i>
-                  </a>
-                  {this.navMenu()}
-                  {this.socialButtons()}
-                </div>
-              </div>
-            </div>
-            {this.props.children}
+          <div className="ui vertical inverted sidebar menu left" id="toc"
+              style={{padding: "2.5rem 0"}}>
+            {this.navMenu()}
+            {this.socialButtons()}
           </div>
 
-          <div className="ui black inverted vertical footer segment">
-            <div className="ui center aligned container">
-              <div className="ui left aligned inverted segment">
-                <h4 className="ui inverted teal header">Data Policy</h4>
-                <p>
-                  We collect anonymized data for research purposes only.
-                  Your data is never sold, shared, or used for commercial or marketing purposes.
+          <div className="ui black big launch right attached fixed button">
+            <i className="content icon"></i>
+            <span className="text">Menu</span>
+          </div>
+
+          <div className="pusher">
+            <div className="full height" style={{padding: "2rem 0 0 0"}}>
+              {this.props.children}
+            </div>
+
+            <div className="ui black inverted vertical footer segment">
+              <div className="ui center aligned container">
+                <div className="ui left aligned inverted segment">
+                  <h4 className="ui inverted teal header">Data Policy</h4>
+                  <p>
+                    We collect anonymized data for research purposes only.
+                    Your data is never sold, shared, or used for commercial or marketing purposes.
+                  </p>
+                </div>
+                <div className="ui inverted section divider"></div>
+                <p className="ui inverted small segment item">
+                  This work was completed as part of a thesis project for Cambridge University's <a href="http://www.mlsalt.eng.cam.ac.uk/">MPhil in Machine Learning, Speech, and Language Technology</a>.
                 </p>
               </div>
-              <div className="ui inverted section divider"></div>
-              <p className="ui inverted small segment item">
-                This work was completed as part of a thesis project for Cambridge University's <a href="http://www.mlsalt.eng.cam.ac.uk/">MPhil in Machine Learning, Speech, and Language Technology</a>.
-              </p>
             </div>
           </div>
 
