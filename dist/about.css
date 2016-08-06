@@ -2,7 +2,7 @@
             Homepage
 *******************************/
 
-#example.index .pusher > .page {
+#example.index .pusher   .page {
   background-color: #FFFFFF;
 }
 
@@ -12,12 +12,12 @@
     -webkit-overflow-scrolling: auto;
   }
 }
-#example > .pusher {
+#example   .pusher {
   display: block;
   min-height: 0px;
   flex-direction: initial;
 }
-#example > .pusher > .full.height {
+#example   .pusher > .full.height {
   display: block;
   flex: none !important;
 }
@@ -161,7 +161,7 @@
   transform: translate3d(0, 0, 0);
 }
 
-#example.index > .pusher > .footer {
+#example.index   .pusher > .footer {
   padding-left: 0em;
 }
 
@@ -298,55 +298,6 @@
 
 #example .intro.segment h1 + p {
   font-size: 22px;
-}
-
-/*--------------
-    Demo
----------------*/
-
-#example .demo.row .example > .ui.label:not(.empty) {
-  margin-bottom: 1em;
-}
-#example .demo.row .ui.progress {
-  margin-bottom: 2.5em;
-}
-#example .demo.row h4 {
-  font-weight: bold !important;
-  margin: 0em 0em 1em !important;
-}
-#example .demo.row .example {
-  clear: both;
-  padding-top: 3em;
-  margin-top: 3em;
-}
-#example .demo.row .ui.menu,
-#example .demo.row .ui.card {
-  width: 100%;
-}
-#example .demo.row .ui.card {
-  width: 100%;
-  max-width: 400px;
-}
-
-/*--------------
-    Features
----------------*/
-
-#example.index .hidden.code {
-  visibility: hidden;
-}
-
-#example.index .demo.row .example {
-  clear: both;
-  padding-top: 1.5em;
-  margin-top: 1.5em;
-}
-#example.index .demo.row .example:first-child {
-  margin-top: 0;
-  padding-top: 0;
-}
-#example.index .demo.row .example:last-child {
-  margin-bottom: 0em;
 }
 
 /*--------------
