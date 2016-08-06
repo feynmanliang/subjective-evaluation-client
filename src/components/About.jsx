@@ -11,15 +11,22 @@ export default class About extends Component {
   render() {
     return (
       <div>
-        <div className="ui vertical inverted masthead center aligned segment">
-          <div className="ui text container">
-            <h1 className="ui inverted header">
-              The BachBot Challenge
-            </h1>
-            <h2>Can you tell the difference between Bach and a computer?</h2>
-            <Link className="ui huge primary button" to="/quiz">
-              Test Yourself<i className="right arrow icon"></i>
-            </Link>
+        <div className="masthead segment">
+          <div className="ui container">
+            <div className="introduction">
+              <h1 className="ui inverted header">
+                <span className="library">
+                The BachBot Challenge
+                </span>
+                <span className="tagline">
+                Can you tell the difference between Bach and a computer?
+                </span>
+              </h1>
+              <div className="ui hidden divider"></div>
+              <Link className="ui huge inverted download button" to="/quiz">
+                Test Yourself<i className="right arrow icon"></i>
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -107,10 +114,6 @@ export default class About extends Component {
                 </div>
               </div>
             </div>
-
-            <div className="ui header divider"></div>
-
-            This work was completed as part of a thesis in Cambridge University's <a href="http://www.mlsalt.eng.cam.ac.uk/">MPhil in Machine Learning, Speech and Language Technology</a>.
 
           </div>
         </div>

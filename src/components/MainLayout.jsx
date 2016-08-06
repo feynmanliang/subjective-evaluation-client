@@ -5,27 +5,74 @@ import { IndexLink, Link } from 'react-router'
 
 export default class MainLayout extends Component {
   componentDidMount() {
-    $(document)
-      .ready(() => {
-        // fix menu when passed
-        $(this.refs.navbar)
-          .visibility({ context: $('#content') })
+    // Allow for console.log to not break IE
+    if (typeof window.console == "undefined" || typeof window.console.log == "undefined") {
+      window.console = {
+        log  : function() {},
+        info : function(){},
+        warn : function(){}
+      };
+    }
+    if(typeof window.console.group == 'undefined' || typeof window.console.groupEnd == 'undefined' || typeof window.console.groupCollapsed == 'undefined') {
+      window.console.group = function(){};
+      window.console.groupEnd = function(){};
+      window.console.groupCollapsed = function(){};
+    }
+    if(typeof window.console.markTimeline == 'undefined') {
+      window.console.markTimeline = function(){};
+    }
+    window.console.clear = function(){};
+
+    $(document).ready(() => {
+
+      // selector cache
+      var
+        $menu                = $('#toc'),
+        requestAnimationFrame = window.requestAnimationFrame
+          || window.mozRequestAnimationFrame
+          || window.webkitRequestAnimationFrame
+          || window.msRequestAnimationFrame
+          || function(callback) { setTimeout(callback, 0); };
+
+      // main sidebar
+      $menu
+        .sidebar({
+            context          : $('#app'),
+            dimPage          : true,
+            transition       : 'overlay',
+            mobileTransition : 'uncover'
+        })
+        .sidebar('attach events', '.launch.button, .view-ui, .launch.item');
+
+      // fixed top menu
+      if($(window).width() > 600) {
+        $('body')
           .visibility({
-            once: false,
-            onBottomPassed: function() {
-              $('.fixed.menu').transition('fade in');
+            offset         : -10,
+            observeChanges : false,
+            once           : false,
+            continuous     : false,
+            onTopPassed: function() {
+              requestAnimationFrame(function() {
+                $('.following.bar')
+                  .addClass('light fixed')
+                  .find('.menu')
+                  .removeClass('inverted')
+                ;
+              });
             },
-            onBottomPassedReverse: function() {
-              $('.fixed.menu').transition('fade out');
+            onTopPassedReverse: function() {
+              requestAnimationFrame(function() {
+                $('.following.bar')
+                  .removeClass('light fixed')
+                  .find('.menu')
+                    .addClass('inverted')
+                ;
+              });
             }
           });
-
-          // create sidebar and attach to menu open
-          $('.ui.sidebar')
-            .sidebar({ context: $('#content') })
-            .sidebar('setting', 'transition', 'overlay')
-            .sidebar('attach events', '.toc.item');
-      });
+      }
+    });
   }
 
   navMenu() {
@@ -65,24 +112,42 @@ export default class MainLayout extends Component {
   render() {
     return (
       <div id="app" className="app">
-        <div className="ui large top fixed hidden menu">
+
+        <div className="ui vertical inverted sidebar menu left" id="toc">
+          {this.navMenu()}
+          {this.socialButtons()}
+        </div>
+
+        <div className="ui black big launch right attached fixed button">
+          <i className="content icon"></i>
+          <span className="text">Menu</span>
+        </div>
+
+        <div className="ui fixed inverted main menu">
           <div className="ui container">
-            {this.navMenu()}
-            {this.socialButtons()}
+            <a className="launch icon item">
+              <i className="content icon"></i>
+            </a>
+
+            <div className="right menu">
+
+              <div className="vertically fitted borderless item">
+                <iframe className="github"
+                    src="https://ghbtns.com/github-btn.html?user=feynmanliang&amp;repo=bachbot&amp;type=watch&amp;count=true"
+                    allowTransparency="true" frameBorder="0" scrolling="0" width="100" height="20"></iframe>
+              </div>
+
+            </div>
           </div>
         </div>
 
-        <div id="content">
-          <div className="ui inverted left vertical sidebar menu">
-            {this.navMenu()}
-            {this.socialButtons()}
-          </div>
+        <div className="pusher">
 
-          <div className="pusher">
-            <div ref="navbar" id="navbar" className="ui inverted vertical masthead center aligned segment">
+          <div className="full height">
+            <div className="following bar">
               <div className="ui container">
-                <div className="ui large secondary inverted pointing menu">
-                  <a className="toc item">
+                <div className="ui large secondary network inverted menu">
+                  <a className="view-ui item">
                     <i className="sidebar icon"></i>
                   </a>
                   {this.navMenu()}
@@ -92,22 +157,23 @@ export default class MainLayout extends Component {
             </div>
             {this.props.children}
           </div>
-        </div>
 
-        <div className="ui inverted vertical footer segment">
-          <div className="ui container">
-            <div className="ui stackable inverted divided equal height stackable grid">
-              <div className="one wide column">
-              </div>
-              <div className="nine wide column">
-                <h4 className="ui inverted header">Data Policy</h4>
+          <div className="ui black inverted vertical footer segment">
+            <div className="ui center aligned container">
+              <div className="ui left aligned inverted segment">
+                <h4 className="ui inverted teal header">Data Policy</h4>
                 <p>
                   We collect anonymized data for research purposes only.
                   Your data is never sold, shared, or used for commercial or marketing purposes.
                 </p>
               </div>
+              <div className="ui inverted section divider"></div>
+              <p className="ui inverted small segment item">
+                This work was completed as part of a thesis project for Cambridge University's <a href="http://www.mlsalt.eng.cam.ac.uk/">MPhil in Machine Learning, Speech, and Language Technology</a>.
+              </p>
             </div>
           </div>
+
         </div>
 
       </div>
