@@ -53,15 +53,24 @@ export default class MainLayout extends Component {
             }
           });
 
-        // create sidebar and attach to menu open
-        $('.ui.sidebar')
-          .sidebar('attach events', '.toc.item');
+          // create sidebar and attach to menu open
+          $('.ui.sidebar')
+            .sidebar({ context: $('#app') })
+            .sidebar('setting', 'transition', 'overlay')
+            .sidebar('attach events', '.toc.item');
       });
   }
 
   render() {
     return (
-      <div className="app">
+      <div id="app">
+        <div className="ui large top fixed hidden menu">
+          <div className="ui container">
+            {this.navMenu()}
+            {this.socialButtons()}
+          </div>
+        </div>
+
         <div className="ui vertical inverted sidebar menu left">
           {this.navMenu()}
           {this.socialButtons()}
