@@ -37,7 +37,7 @@ export default class About extends Component {
               C-major or A-minor and set to 120 BPM.
             </p>
 
-            <h2 className="ui header">Help advance research in creative AI</h2>
+            <h2 className="ui header">Help research in creative AI</h2>
             <p>
               We will use your anonymized responses as a valuable feedback signal
               for training the model.

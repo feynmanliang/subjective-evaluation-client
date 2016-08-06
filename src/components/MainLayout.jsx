@@ -4,6 +4,30 @@ import React, { Component, PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router'
 
 export default class MainLayout extends Component {
+  componentDidMount() {
+    $(document)
+      .ready(() => {
+        // fix menu when passed
+        $(this.refs.navbar)
+          .visibility({ context: $('#content') })
+          .visibility({
+            once: false,
+            onBottomPassed: function() {
+              $('.fixed.menu').transition('fade in');
+            },
+            onBottomPassedReverse: function() {
+              $('.fixed.menu').transition('fade out');
+            }
+          });
+
+          // create sidebar and attach to menu open
+          $('.ui.sidebar')
+            .sidebar({ context: $('#content') })
+            .sidebar('setting', 'transition', 'overlay')
+            .sidebar('attach events', '.toc.item');
+      });
+  }
+
   navMenu() {
     return [
       <IndexLink key="about" activeClassName="active" className="item" to="/">About</IndexLink>,
@@ -38,32 +62,9 @@ export default class MainLayout extends Component {
     </div>);
   }
 
-  componentDidMount() {
-    $(document)
-      .ready(() => {
-        // fix menu when passed
-        $(this.refs.navbar)
-          .visibility({
-            once: false,
-            onBottomPassed: function() {
-              $('.fixed.menu').transition('fade in');
-            },
-            onBottomPassedReverse: function() {
-              $('.fixed.menu').transition('fade out');
-            }
-          });
-
-          // create sidebar and attach to menu open
-          $('.ui.sidebar')
-            .sidebar({ context: $('#app') })
-            .sidebar('setting', 'transition', 'overlay')
-            .sidebar('attach events', '.toc.item');
-      });
-  }
-
   render() {
     return (
-      <div id="app">
+      <div id="app" className="app">
         <div className="ui large top fixed hidden menu">
           <div className="ui container">
             {this.navMenu()}
@@ -71,25 +72,28 @@ export default class MainLayout extends Component {
           </div>
         </div>
 
-        <div className="ui vertical inverted sidebar menu left">
-          {this.navMenu()}
-          {this.socialButtons()}
-        </div>
+        <div id="content">
+          <div className="ui inverted left vertical sidebar menu">
+            {this.navMenu()}
+            {this.socialButtons()}
+          </div>
 
-        <div className="pusher">
-          <div ref="navbar" id="navbar" className="ui inverted vertical masthead center aligned segment">
-            <div className="ui container">
-              <div className="ui large secondary inverted pointing menu">
-                <a className="toc item">
-                  <i className="sidebar icon"></i>
-                </a>
-                {this.navMenu()}
-                {this.socialButtons()}
+          <div className="pusher">
+            <div ref="navbar" id="navbar" className="ui inverted vertical masthead center aligned segment">
+              <div className="ui container">
+                <div className="ui large secondary inverted pointing menu">
+                  <a className="toc item">
+                    <i className="sidebar icon"></i>
+                  </a>
+                  {this.navMenu()}
+                  {this.socialButtons()}
+                </div>
               </div>
             </div>
+            {this.props.children}
           </div>
-          {this.props.children}
         </div>
+
         <div className="ui inverted vertical footer segment">
           <div className="ui container">
             <div className="ui stackable inverted divided equal height stackable grid">
@@ -105,6 +109,7 @@ export default class MainLayout extends Component {
             </div>
           </div>
         </div>
+
       </div>
     );
   }
