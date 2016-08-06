@@ -23,7 +23,8 @@ import About from './components/About';
 import { ChallengeContainer } from './components/Challenge';
 import UserInfoForm from './components/UserInfoForm';
 
-ReactGA.initialize('UA-26556828-2', {
+const gaTracker = (process.env.NODE_ENV === 'production') ? 'UA-26556828-2' : 'UA-00000000-1';
+ReactGA.initialize(gaTracker, {
   debug: (process.env.NODE_ENV === 'development')
 });
 function logPageView() {
