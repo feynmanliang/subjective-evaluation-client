@@ -33,7 +33,7 @@ export class PlayRestartPlayer extends Component {
   }
 
   onReplayClick() {
-    this.audio.rewind();
+    this.audio.seekTo(0, 'seconds')
     this.props.replaySound(this.props.name);
   }
 

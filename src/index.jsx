@@ -32,9 +32,10 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname);
 }
 
-const experimentJsonUrl = (process.env.NODE_ENV !== 'production') ?
-  'experiment.json' :
-  'https://bachbot-blob.azureedge.net/experiments/experiment.json'
+// const experimentJsonUrl = (process.env.NODE_ENV !== 'production') ?
+//   'experiment.json' :
+//   'https://bachbot-blob.azureedge.net/experiments/experiment.json'
+const experimentJsonUrl = '/experiment.json';
 
 fetch(experimentJsonUrl)
   .then(response => response.json())
